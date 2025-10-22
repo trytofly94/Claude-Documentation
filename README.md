@@ -142,16 +142,9 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 
 ### API & Skills Updates
 
-📦 **Skills API** (`/v1/skills`)
-- Programmatische Skill-Verwaltung
-- Versionierung & Rollback
-- Skill-Creator für interaktive Erstellung
-- Box Integration Skills
+📦 **Skills API** (`/v1/skills`) - Programmatische Skill-Verwaltung mit Versionierung (→ [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md#skills-api))
 
-🧠 **Developer Platform**
-- Context Editing für längere Tasks
-- Memory Tool für persistentes Memory
-- Erweiterte API-Funktionen
+🧠 **Developer Platform** - Context Editing & Memory Tool für längere Tasks (→ [CLAUDE_CODE.md](CLAUDE_CODE.md#api-features))
 
 ### Security & Tools
 
@@ -253,43 +246,16 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 
 ## 🔄 Changelog
 
-### Version 3.2 (22. Oktober 2025) - Tool-Interaktionen & Synergismen
-- 🔄 **Neue Datei: TOOL_INTERACTIONS.md** - Umfassende Dokumentation aller Tool-Interaktionen
-- 🎯 **SlashCommand Tool** - Wie Claude Slash Commands programmatisch aufrufen kann
-- 🤖 **Skills Progressive Disclosure** - Zwei-Level-System für effiziente Context-Nutzung
-- ⚡ **Hooks Event-Driven Architecture** - PreToolUse, PostToolUse und weitere
-- 🔗 **10 Interaktionsmuster** - Von einfach bis Enterprise-Grade
-- 📊 **Decision Matrix** - Wann welches Tool nutzen
-- 🐛 **Debugging-Guide** - Troubleshooting für alle Tool-Typen
-- ✅ **Best Practices** - Optimale Integration aller Komponenten
+### Version 3.2 (22. Oktober 2025)
+- 🔄 **TOOL_INTERACTIONS.md** - Neue Datei für Tool-Synergismen & Interaktionsmuster
 
-### Version 3.1 (22. Oktober 2025) - Aktuelle Web-Recherche
-- 🔍 **Alle Punkte mit aktueller Dokumentation verifiziert**
-- ⚠️ **"Imagine with Claude"** - Korrigiert als temporäres Feature (war nur Sept 29 - Okt 11, 2025)
-- 🧪 **Context Editing** - Beta-Status und korrekte Beta-Header dokumentiert (`context-management-2025-06-27`)
-- 💾 **Memory Tool** - Als file-based, client-side System korrekt beschrieben
-- 🎯 **Skills API** - Beta-Header hinzugefügt (`anthropic-beta: skills-2025-10-02`), Launch-Datum 16. Okt 2025
-- 📦 **Box Integration** - Von Skills zu MCP verschoben (ist MCP-Server, kein Skill)
-- ✅ Performance-Metriken für Context Editing + Memory Tool ergänzt
-- ✅ Offizielle Dokumentations-Links hinzugefügt
+### Version 3.1 (22. Oktober 2025)
+- 🔍 Dokumentation mit offiziellen Quellen verifiziert
+- 📦 Box MCP-Server, Skills API, Context Editing & Memory Tool ergänzt
 
 ### Version 3.0 (22. Oktober 2025)
-- ♻️ Dokument in modulare Struktur aufgeteilt
-- ✅ Alle Oktober 2025 Updates integriert
-- ✅ Legacy CLI Integration dokumentiert
-- ✅ API Features (Context Editing, Memory Tool) hinzugefügt
-- ✅ Skills API & Box Integration dokumentiert
-- ✅ "Imagine with Claude" beschrieben
-- ✅ Skill-Creator & Enterprise Deployment hinzugefügt
-
-### Version 2.0 (22. Oktober 2025)
-- ✅ Claude Code 2.0 Features komplett
-- ✅ Claude Sonnet 4.5 Updates
-- ✅ Security Features dokumentiert
-
-### Version 1.0 (Initial)
-- ✅ Basis-Recherche abgeschlossen
-- ✅ Alle 6 Schritte dokumentiert
+- ♻️ Modulare Struktur: Dokumentation in Einzeldateien aufgeteilt
+- ✅ Oktober 2025 Updates vollständig integriert
 
 ---
 
