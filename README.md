@@ -228,6 +228,16 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 
 ## 🔄 Changelog
 
+### Version 3.1 (22. Oktober 2025) - Aktuelle Web-Recherche
+- 🔍 **Alle Punkte mit aktueller Dokumentation verifiziert**
+- ⚠️ **"Imagine with Claude"** - Korrigiert als temporäres Feature (war nur Sept 29 - Okt 11, 2025)
+- 🧪 **Context Editing** - Beta-Status und korrekte Beta-Header dokumentiert (`context-management-2025-06-27`)
+- 💾 **Memory Tool** - Als file-based, client-side System korrekt beschrieben
+- 🎯 **Skills API** - Beta-Header hinzugefügt (`anthropic-beta: skills-2025-10-02`), Launch-Datum 16. Okt 2025
+- 📦 **Box Integration** - Von Skills zu MCP verschoben (ist MCP-Server, kein Skill)
+- ✅ Performance-Metriken für Context Editing + Memory Tool ergänzt
+- ✅ Offizielle Dokumentations-Links hinzugefügt
+
 ### Version 3.0 (22. Oktober 2025)
 - ♻️ Dokument in modulare Struktur aufgeteilt
 - ✅ Alle Oktober 2025 Updates integriert

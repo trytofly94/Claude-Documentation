@@ -1221,18 +1221,23 @@ Claude Code und die Claude API bieten erweiterte Features für längere autonome
 
 #### Context Editing Feature
 
-**Automatisches Bereinigen veralteter Informationen**
+**Automatisches Bereinigen veralteter Informationen (Beta)**
 
-Context Editing ist ein neues Feature der Claude API, das automatisch veraltete Informationen im Context Window entfernt und relevanten Context behält. Dies ermöglicht längere autonome Tasks ohne Context-Overflow.
+Context Editing ist ein Beta-Feature der Claude API, das automatisch veraltete Tool-Calls und Results aus dem Context Window entfernt, wenn Token-Limits erreicht werden. Dies ermöglicht längere autonome Tasks ohne Context-Overflow.
+
+**Status:**
+- 🧪 **Beta** - Erfordert Beta-Header
+- 📅 **Beta-Header:** `context-management-2025-06-27`
+- 🔧 **Strategie:** `clear_tool_uses_20250919`
 
 **Wie es funktioniert:**
-- **Context Window Management** - Intelligentes Management des verfügbaren Context
-- **Auto-Cleanup** - Entfernt outdated Informationen automatisch
-- **Relevanter Context bleibt** - Wichtige Informationen werden bewahrt
-- **Längere Tasks** - Ermöglicht 30+ Stunden autonomes Coding
+- **Tool Result Clearing** - Löscht automatisch die ältesten Tool-Results chronologisch
+- **Context Threshold** - Aktiviert sich wenn konfigurierter Schwellenwert erreicht wird
+- **Placeholder Text** - Ersetzt gelöschte Results mit Platzhaltern
+- **Conversation Flow** - Erhält Gesprächsfluss während Cleaning
 
 **Claude Code Integration:**
-Claude Code nutzt Context Editing automatisch bei langen Sessions. Keine manuelle Konfiguration erforderlich.
+Claude Code nutzt Context Editing automatisch bei langen Sessions. Keine manuelle Konfiguration erforderlich - das System aktiviert es intern wenn nötig.
 
 **API-Usage (für eigene Agents):**
 ```python
@@ -1240,45 +1245,71 @@ import anthropic
 
 client = anthropic.Anthropic(api_key="your-key")
 
-# Context Editing aktivieren
+# Context Editing aktivieren mit Beta-Header
 response = client.messages.create(
     model="claude-sonnet-4-5",
     messages=[...],
-    context_editing=True  # NEU
+    extra_headers={
+        "anthropic-beta": "context-management-2025-06-27"
+    },
+    # Konfiguration für Context Editing
+    # (Details siehe offizielle API Docs)
 )
 ```
 
+**Performance-Impact:**
+- **Mit Context Editing:** 29% Verbesserung über Baseline
+- **Mit Context Editing + Memory Tool:** 39% Verbesserung
+- **Token-Reduktion:** 84% weniger Token-Consumption in 100-Turn Tests
+- **Workflow-Erfolg:** Ermöglicht Tasks die sonst wegen Context-Exhaustion fehlschlagen würden
+
 **Use Cases:**
 - ✅ Lange Coding-Sessions (30+ Stunden)
-- ✅ Multi-Step Refactorings
+- ✅ Multi-Step Refactorings mit vielen Tool-Calls
 - ✅ Iterative Feature-Development
-- ✅ Complex Debugging-Sessions
+- ✅ Complex Debugging-Sessions mit vielen Tests
 
 **Benefits:**
 - 🚀 Keine manuelle Context-Bereinigung nötig
-- 🚀 Fokus auf relevante Informationen
-- 🚀 Bessere Performance bei langen Tasks
-- 🚀 Automatisches Memory-Management
+- 🚀 Fokus auf relevante Informationen bleibt
+- 🚀 Erhebliche Token-Savings (bis 84%)
+- 🚀 Ermöglicht Tasks die sonst unmöglich wären
+
+**Kombination mit Prompt Caching:**
+Bei gleichzeitiger Nutzung von Prompt Caching und Context Editing entstehen Cache-Write-Costs bei jedem Clearing, aber nachfolgende Requests können den neuen Cache-Prefix wiederverwenden.
+
+**Offizielle Dokumentation:**
+https://docs.claude.com/en/docs/build-with-claude/context-editing
 
 ---
 
 #### Memory Tool
 
-**Persistentes Memory über Context-Window hinaus**
+**Persistentes File-Based Memory (Beta)**
 
-Das Memory Tool ermöglicht es Claude, Informationen langfristig zu speichern – über das Context Window und multiple Sessions hinweg.
+Das Memory Tool ist ein Beta-Feature der Claude API, das es Claude ermöglicht, Informationen in Files zu speichern, die außerhalb des Context Windows persistieren. Es ist ein **file-based, client-side System** wo Entwickler die Storage-Backend-Kontrolle haben.
 
-**Features:**
-- **Langzeit-Speicherung** - Informationen bleiben über Sessions erhalten
-- **Multi-Session Memory** - Wissen wird über Sessions hinweg geteilt
-- **Strukturiertes Knowledge Management** - Organisierte Speicherung
-- **API-gesteuert** - Programmatische Kontrolle über Memory
+**Status:**
+- 🧪 **Beta** - Erfordert Beta-Header
+- 📅 **Beta-Header:** `context-management-2025-06-27`
+- 💾 **Storage:** Client-side, developer-managed
+
+**Wie es funktioniert:**
+- **File-Based System** - Claude erstellt, liest, updated und löscht Files
+- **Dedicated Memory Directory** - Separates Verzeichnis für Memory-Files
+- **Client-Side Storage** - Developer kontrolliert wo Daten gespeichert werden
+- **Tool Calls** - Claude nutzt Tool-Calls um Memory zu managen
+- **Cross-Session** - Informationen persistieren über Konversationen hinweg
+
+**Architektur:**
+Das Memory Tool operiert komplett **client-side durch Tool-Calls**. Der Developer managed die Storage-Backend, was volle Kontrolle über Datenspeicherung und Persistierung gibt.
 
 **Claude Code Integration:**
-Aktuell ist das Memory Tool primär für die API verfügbar. Claude Code nutzt alternative Mechanismen:
-- `CLAUDE.md` für Projekt-Memory
-- Skills für wiederverwendbares Wissen
-- Sessions können resumed werden (Konversations-History bleibt)
+Das Memory Tool ist **NICHT automatisch in Claude Code integriert**. Claude Code nutzt stattdessen:
+- **`CLAUDE.md`** - Projekt-Memory (manuell managed)
+- **Skills** - Wiederverwendbares Domain-Wissen
+- **Session Resume** - Konversations-History bleibt erhalten
+- **Context Editing** - Automatisches Context-Management
 
 **API-Usage (für eigene Agents):**
 ```python
@@ -1286,45 +1317,65 @@ import anthropic
 
 client = anthropic.Anthropic(api_key="your-key")
 
-# Memory Tool nutzen
+# Memory Tool mit Beta-Header aktivieren
 response = client.messages.create(
     model="claude-sonnet-4-5",
     messages=[...],
-    tools=[
-        {
-            "type": "memory",
-            "name": "project_memory",
-            "description": "Long-term memory for this project"
-        }
-    ]
+    extra_headers={
+        "anthropic-beta": "context-management-2025-06-27"
+    },
+    # Tool-Calls ermöglichen Claude, Files zu managen
+    # Developer implementiert File-Operations (create, read, update, delete)
 )
 
-# Claude kann jetzt Informationen im Memory speichern und abrufen
-# Beispiel: "Remember that we use TypeScript strict mode in this project"
-# Bei zukünftigen Requests wird diese Information automatisch verfügbar sein
+# Claude nutzt Tool-Calls wie:
+# - create_memory_file(path, content)
+# - read_memory_file(path)
+# - update_memory_file(path, content)
+# - delete_memory_file(path)
+
+# Developer managed Storage-Backend (local files, S3, database, etc.)
 ```
+
+**Performance mit Context Editing:**
+- **Context Editing allein:** +29% über Baseline
+- **Context Editing + Memory Tool:** +39% über Baseline
+- **Token-Savings:** Massive Reduktion durch Auslagerung aus Context
 
 **Use Cases:**
 - ✅ **Long-running Projects** - Projektkontext über Wochen/Monate
-- ✅ **Persistent User Preferences** - Nutzer-spezifische Einstellungen
-- ✅ **Historical Context** - Vergangene Entscheidungen und Begründungen
-- ✅ **Team Knowledge** - Geteiltes Wissen über das Team
+- ✅ **Persistent Knowledge** - Informationen die Context-Window überleben
+- ✅ **Historical Decisions** - Warum bestimmte Entscheidungen getroffen wurden
+- ✅ **Incremental Learning** - Claude baut Wissen über Zeit auf
 
-**Memory vs. CLAUDE.md:**
+**Memory Tool vs. Team Memory (Chat):**
+
+| Aspekt | Memory Tool (API/Beta) | Team Memory (Chat) |
+|--------|------------------------|---------------------|
+| **Platform** | API (Developer Platform) | Claude.ai/Desktop (Chat) |
+| **Storage** | File-based, client-side | Anthropic-managed |
+| **Access** | Programmatic (Tool Calls) | Automatisch |
+| **Control** | Developer hat volle Kontrolle | Anthropic managed |
+| **Verfügbarkeit** | Beta, für Developers | Team & Enterprise Plans |
+
+**Memory Tool vs. CLAUDE.md:**
 
 | Aspekt | Memory Tool (API) | CLAUDE.md (Claude Code) |
 |--------|-------------------|-------------------------|
-| **Speicherort** | Claude's Backend | Lokales Filesystem |
-| **Persistence** | API-managed | Git-versioniert |
-| **Sharing** | Über API | Über Git |
-| **Auto-Update** | Von Claude gesteuert | Manuell editiert |
-| **Verfügbarkeit** | API only | Claude Code & Desktop |
+| **Speicherort** | Developer's Infrastructure | Lokales Filesystem (Git) |
+| **Updates** | Claude via Tool-Calls | Manuell oder via Claude |
+| **Persistence** | Developer-defined | Git-versioniert |
+| **Auto-Managed** | ✅ Von Claude | ❌ Manuell |
+| **Cross-Session** | ✅ Automatisch | ✅ Via Git |
 
 **Best Practice für Claude Code:**
-Nutze `CLAUDE.md` für statisches Projekt-Wissen und Skills für wiederverwendbare Workflows. Das Memory Tool ist primär für eigene Agent-Implementations via API relevant.
+- ✅ Nutze **`CLAUDE.md`** für statisches Projekt-Wissen
+- ✅ Nutze **Skills** für wiederverwendbare Workflows
+- ✅ Nutze **Context Editing** (automatisch) für lange Sessions
+- ⚠️ Memory Tool ist für **custom Agent-Implementations via API** relevant
 
-**Zukünftige Integration:**
-Memory Tool könnte in zukünftigen Claude Code Versionen direkt integriert werden, um Project Memory automatisch zu verwalten.
+**Offizielle Dokumentation:**
+https://docs.claude.com/en/docs/agents-and-tools/tool-use/memory-tool
 
 ---
 

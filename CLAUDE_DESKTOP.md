@@ -272,9 +272,14 @@ Diese Skills arbeiten automatisch im Hintergrund bei Dokument-Erstellung.
 
 #### Skills API (`/v1/skills`) - Programmatische Verwaltung
 
-**NEU seit Oktober 2025:** Vollständige API für Skill-Management
+**NEU: Oktober 16, 2025 - Beta**
 
-Das Skills API ermöglicht programmatische Verwaltung von Skills über die Claude API. Dies ist besonders nützlich für Automatisierung und Enterprise-Deployments.
+Das Skills API ermöglicht programmatische Verwaltung von Skills über die Claude API. Announced am 16. Oktober 2025, ist es aktuell in Beta.
+
+**Status:**
+- 🧪 **Beta** - Erfordert Beta-Header
+- 📅 **Announced:** 16. Oktober 2025
+- 🔑 **Beta-Header:** `anthropic-beta: skills-2025-10-02`
 
 **Verfügbarkeit:**
 - Pro, Max, Team, Enterprise Plans
@@ -282,47 +287,44 @@ Das Skills API ermöglicht programmatische Verwaltung von Skills über die Claud
 - API-Key erforderlich
 
 **Features:**
-- ✅ **Erstellen** - Skills programmatisch hochladen
-- ✅ **Auflisten** - Alle verfügbaren Skills abrufen
-- ✅ **Aktualisieren** - Skill-Versionen verwalten
-- ✅ **Löschen** - Skills entfernen
-- ✅ **Versionierung** - Rollback zu vorherigen Versionen
-- ✅ **A/B Testing** - Mehrere Skill-Versionen parallel testen
+- ✅ **POST /v1/skills** - Skills erstellen und hochladen
+- ✅ **GET /v1/skills** - Alle verfügbaren Skills auflisten
+- ✅ **Multipart Upload** - Files und Metadata hochladen
+- ✅ **Versionierung** - Pin specific versions oder nutze "latest"
+- ✅ **Messages API Integration** - Bis zu 8 Skills per Request
 
 **API-Beispiele:**
+
+```bash
+# Skill erstellen via cURL
+curl -X POST "https://api.anthropic.com/v1/skills" \
+  -H "x-api-key: $ANTHROPIC_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "anthropic-beta: skills-2025-10-02" \
+  -F "display_title=My Excel Skill" \
+  -F "files[]=@excel-skill/SKILL.md;filename=excel-skill/SKILL.md" \
+  -F "files[]=@excel-skill/process_excel.py;filename=excel-skill/process_excel.py"
+```
 
 ```python
 import anthropic
 
 client = anthropic.Anthropic(api_key="your-key")
 
-# Skill erstellen
-skill = client.skills.create(
-    name="Custom Analysis",
-    description="Domain-specific analysis skill for our product data",
-    content=skill_content  # SKILL.md Inhalt als String
+# Skills in Messages API nutzen
+response = client.messages.create(
+    model="claude-sonnet-4-5",
+    extra_headers={
+        "anthropic-beta": "skills-2025-10-02"
+    },
+    messages=[...],
+    # Container parameter für Skills
+    # (Bis zu 8 Skills per Request)
 )
 
-# Skill auflisten
-skills = client.skills.list()
-for skill in skills:
-    print(f"{skill.name}: {skill.version}")
-
-# Skill updaten (neue Version)
-client.skills.update(
-    skill_id="skill_abc123",
-    version="v2",
-    content=updated_skill_content
-)
-
-# Skill löschen
-client.skills.delete(skill_id="skill_abc123")
-
-# Zu vorheriger Version zurückrollen
-client.skills.rollback(
-    skill_id="skill_abc123",
-    to_version="v1"
-)
+# Skills auflisten
+skills_response = client.skills.list()
+# Unterstützt sowohl Anthropic-managed als auch custom skills
 ```
 
 **Versionierungs-Workflow:**
@@ -431,85 +433,6 @@ Ready to use! You can now:
 - 🚀 Best Practices automatisch integriert
 - 🚀 Konsistente Struktur
 - 🚀 Weniger Fehler
-
----
-
-#### Box Integration Skills (NEU)
-
-**Offizielle Box-MCP-Server + Skills**
-
-Box bietet jetzt offizielle Integration mit Claude über MCP-Server und spezialisierte Skills für Enterprise-Content-Management.
-
-**Features:**
-- ✅ **Read/Write Box Content** - Direkter Zugriff auf Box-Dateien
-- ✅ **Transform Files** - Automatische Konvertierung zu PPTX/XLSX/DOCX
-- ✅ **Organisation Standards** - Einhaltung von Unternehmens-Richtlinien
-- ✅ **Collaboration** - Team-weite Content-Erstellung
-
-**Use Cases:**
-- 📊 **Berichte erstellen** - Daten aus Box → Automatisch XLSX/PPTX
-- 📄 **Dokument-Templates** - Standard-Formate für Organisation
-- 🔄 **Bulk-Operationen** - Hunderte Dateien verarbeiten
-- ✅ **Compliance** - Standards automatisch durchsetzen
-
-**Installation:**
-
-**Via Claude Code:**
-```bash
-claude mcp add --transport http box https://mcp.box.com/mcp
-```
-
-**Via Claude Desktop Config:**
-```json
-{
-  "mcpServers": {
-    "box": {
-      "command": "npx",
-      "args": ["-y", "@box/mcp-server"],
-      "env": {
-        "BOX_ACCESS_TOKEN": "${BOX_TOKEN}"
-      }
-    }
-  }
-}
-```
-
-**Authentifizierung:**
-1. Box Developer Account erstellen
-2. OAuth 2.0 App registrieren
-3. Access Token generieren
-4. In Config als Environment Variable speichern
-
-**Beispiel-Workflows:**
-
-**Automatische Berichtserstellung:**
-```
-User: "Create quarterly sales report from Box data"
-
-Claude:
-1. Lädt Daten aus Box (via MCP)
-2. Analysiert mit Code Execution
-3. Generiert PPTX mit Charts
-4. Speichert zurück in Box
-5. Teilt mit Team
-```
-
-**Bulk-Konvertierung:**
-```
-User: "Convert all Word docs in /proposals to updated template"
-
-Claude:
-1. Listet alle DOCX in /proposals
-2. Lädt jedes Dokument
-3. Wendet neues Template an
-4. Speichert als neue Version in Box
-```
-
-**Vorteile:**
-- ⚡ **Spart Stunden** - Automatisierung manueller Arbeit
-- 📋 **Konsistenz** - Alle Dokumente folgen Standards
-- 🔒 **Sicher** - Permissions über Box verwaltet
-- 👥 **Team-Ready** - Alle nutzen gleiche Standards
 
 ---
 
@@ -716,71 +639,65 @@ jobs:
 
 ### H) WEITERE FEATURES & UPDATES (OKTOBER 2025)
 
-#### "Imagine with Claude" (Research Preview)
+#### "Imagine with Claude" (Temporäres Research Preview - BEENDET)
 
-**Real-time Software Generation für Max Users**
+**⚠️ WICHTIG: Dieses Feature war temporär und ist derzeit nicht verfügbar**
 
-"Imagine with Claude" ist ein neues Research Preview Feature, das Real-time Software Generation ermöglicht. Es ist neben Claude Sonnet 4.5 als experimentelles Feature verfügbar.
+"Imagine with Claude" war ein Research Preview Feature für Real-time Software Generation, das vom **29. September bis 11. Oktober 2025** verfügbar war.
 
-**Was ist es:**
-- **Research Preview** - Experimentelles Feature, aktiv in Entwicklung
-- **Real-time Generation** - Software wird in Echtzeit generiert und angezeigt
-- **Visuelles Interface** - Interaktive, visuelle Darstellung des Entwicklungsprozesses
-- **Max Users only** - Exklusiv für Claude Max Plan Subscribers
+**Zeitraum:**
+- **Start:** 29. September 2025
+- **Ursprüngliches Ende:** 4. Oktober 2025 (5 Tage)
+- **Verlängert bis:** 11. Oktober 2025
+- **Aktueller Status:** ❌ Beendet
+- **Zukunft:** ❓ Unklar - Anthropic hat nicht bestätigt ob/wann es zurückkommt
 
-**Use Cases:**
+**Was es war:**
+- **Temporäres Research Preview** - Experimentelles 2-Wochen-Fenster
+- **Real-time UI Generation** - Software wurde in Echtzeit generiert
+- **Powered by "Heli"** - Internes Agent-System speziell für Interface-Generation
+- **Visuelles Interface** - Desktop-ähnlich mit "What do you want to build?" Prompt
+- **Keine Templates** - Alles wurde live von Claude Sonnet 4.5 generiert
+- **Max & Pro Users** - Initial Max-only, dann auf Pro erweitert
+
+**Use Cases (während aktiv):**
 - 🚀 **Rapid Prototyping** - Schnelle Proof-of-Concepts
 - 🎨 **UI/UX Exploration** - Interaktive Design-Iterationen
 - 💡 **Interactive Design Sessions** - Live-Entwicklung mit Stakeholdern
 - 👥 **Live Client Demos** - Real-time Visualisierung von Ideen
 - 🔄 **Iterative Refinement** - Sofortiges Feedback und Anpassungen
 
-**Features:**
-- **Visuelles Feedback** - Sieh Software während sie entsteht
-- **Interaktive Anpassungen** - Änderungen in Real-time
-- **Code + Preview** - Gleichzeitige Anzeige von Code und Result
-- **Schnelle Iterationen** - Deutlich schneller als traditionelle Entwicklung
-
-**Verfügbarkeit:**
-- 🔹 **Nur Claude Max Plan**
-- 🔹 Waitlist war im September 2025
-- 🔹 Rollout läuft schrittweise
-- 🔹 Aktuell in Research Preview Phase
-
-**Zugang erhalten:**
-1. Claude Max Plan abonnieren
-2. In Settings nach "Imagine with Claude" suchen
-3. Falls noch nicht verfügbar: Waitlist beitreten
-4. Benachrichtigung erhalten wenn verfügbar
-
-**Vergleich zu Claude Code:**
-
-| Aspekt | Imagine with Claude | Claude Code |
-|--------|---------------------|-------------|
-| **Fokus** | Visual, Real-time | Production-ready Code |
-| **Interface** | Grafisch, Interactive | Terminal/VS Code |
-| **Use Case** | Prototyping, Design | Full Development |
-| **Speed** | Sehr schnell | Gründlich |
-| **Output** | Visual Demos | Production Code |
-| **Testing** | Visual Validation | Full Test Suites |
-
-**Beispiel-Workflow:**
+**Beispiel (was möglich war):**
 ```
-User: "Create a dashboard with real-time data visualization"
+User: "Create a mood detection app for Samsung S23 with camera access"
 
 Imagine with Claude:
-- Zeigt sofort UI-Mockup
-- Generiert interaktive Charts
-- Live-Daten-Updates simuliert
-- Anpassungen in Real-time
-- Export als Code möglich
+- Generierte App-Interface piece by piece
+- Kamera-Viewfinder erschien live
+- Detection Overlay wurde hinzugefügt
+- Mood Indicators in Real-time
+- Komplett funktionale App in Minuten
 ```
 
-**Hinweis:**
-Da "Imagine with Claude" ein Research Preview ist, sind Details begrenzt und Features können sich ändern. Anthropic sammelt aktiv Feedback für zukünftige Verbesserungen.
+**Technologie:**
+- **Keine IDE, keine Templates** - Alles von Grund auf
+- **Claude Sonnet 4.5** - Live Code-Generation
+- **"Heli" Agent System** - Spezialisiertes System für UI-Generation
+- **Interaktiv** - Änderungen in Real-time während Development
 
-**Zukunft:**
-Das Feature könnte in Zukunft mit Claude Code integriert werden, um visuelles Prototyping mit production-ready Development zu kombinieren.
+**Aktueller Status (Oktober 2025):**
+- ❌ **Nicht mehr verfügbar** - Research Preview endete am 11. Oktober 2025
+- 📊 **Feedback-Phase** - Anthropic sammelt Nutzerfeedback aus dem Experiment
+- 🔮 **Mögliche Zukunft** - Könnte dauerhaftes Feature werden, aber unbestätigt
+
+**Was Anthropic sagte:**
+> "This is a temporary research preview... Anthropic hasn't said whether this will come back, become a permanent feature, or evolve into something else entirely."
+
+**Aktuelle Alternativen:**
+Für schnelles UI-Prototyping nutze:
+- ✅ **Artifacts** in Claude.ai - Interaktive Code-Prototypen
+- ✅ **Claude Code** mit VS Code Extension - Production-ready Development
+- ✅ **Claude Sonnet 4.5** mit Extended Thinking - Komplexe UI-Generation
 
 ---
 

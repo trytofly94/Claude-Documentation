@@ -245,6 +245,115 @@ Prompt: "Plan a Vacation"
 **Other:**
 - **Stytch** - Configure and manage authentication services
 
+---
+
+#### Box MCP-Server (NEU - März 2025)
+
+**Open-Source Enterprise Content Management Integration**
+
+Box hat im März 2025 einen offiziellen open-source MCP-Server veröffentlicht, der Claude (und andere LLMs) mit Box Cloud Storage verbindet.
+
+**Announced:** März 6, 2025 (@BoxPlatform auf X/Twitter)
+
+**Features:**
+- ✅ **box_save_documents** - Batch-Upload mit automatischer Folder-Erstellung
+- ✅ **box_read_document** - Stream Document Content ohne lokales Speichern
+- ✅ **box_manage_folders** - Folder-Strukturen erstellen und organisieren
+- ✅ **box_explore_storage** - Box Directory Tree mit Filtering navigieren
+- ✅ **box_share_content** - Shared Links und Collaborations managen
+- ✅ **box_analyze_document** - Box AI für Dokument-Analyse, Q&A, Extraktion nutzen
+
+**Authentifizierung:**
+- **OAuth 2.0** Authentication
+- **Client Credentials Grant** Support
+- Konfiguration via Environment Variables
+- Kein lokales File Persistence (Security)
+
+**Installation:**
+
+**Via Claude Code:**
+```bash
+claude mcp add --transport http box https://mcp.box.com/mcp
+```
+
+**Via Claude Desktop Config:**
+```json
+{
+  "mcpServers": {
+    "box": {
+      "command": "npx",
+      "args": ["-y", "@box/mcp-server"],
+      "env": {
+        "BOX_ACCESS_TOKEN": "${BOX_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+**Setup-Schritte:**
+1. Box Developer Account erstellen (developer.box.com)
+2. OAuth 2.0 App registrieren
+3. Access Token generieren
+4. Token in Config als Environment Variable speichern
+
+**Beispiel-Workflows:**
+
+**Automatische Berichtserstellung:**
+```
+User: "Create quarterly sales report from Box data"
+
+Claude (via Box MCP):
+1. Lädt Daten aus Box (box_read_document)
+2. Analysiert mit Code Execution
+3. Generiert PPTX mit Charts (Pre-built Skills)
+4. Speichert zurück in Box (box_save_documents)
+5. Erstellt Shared Link (box_share_content)
+```
+
+**Bulk-Dokument-Verarbeitung:**
+```
+User: "Convert all Word docs in /proposals to updated template"
+
+Claude:
+1. Navigiert Folder-Struktur (box_explore_storage)
+2. Listet alle DOCX-Files
+3. Lädt jedes Dokument (box_read_document)
+4. Wendet neues Template an
+5. Speichert als neue Version (box_save_documents)
+```
+
+**Box AI Integration:**
+```
+User: "Summarize all contracts in /legal folder"
+
+Claude:
+1. Findet Contracts (box_explore_storage)
+2. Nutzt Box AI für Analyse (box_analyze_document)
+3. Generiert zusammenfassenden Report
+```
+
+**Use Cases:**
+- 📊 **Enterprise Reporting** - Daten aus Box → Automatische Berichte
+- 📄 **Document Standardization** - Template-Enforcement across Organisation
+- 🔄 **Bulk Operations** - Hunderte/Tausende Files verarbeiten
+- ✅ **Compliance & Governance** - Standards automatisch durchsetzen
+- 🤖 **Box AI + Claude** - Kombiniere Box AI mit Claude's Capabilities
+
+**Vorteile:**
+- ⚡ **Zeitersparnis** - Automatisierung manueller Arbeit
+- 📋 **Konsistenz** - Alle Dokumente folgen Standards
+- 🔒 **Sicherheit** - Permissions über Box verwaltet
+- 👥 **Enterprise-Ready** - Skaliert für große Organisationen
+- 🌐 **Open-Source** - Verfügbar auf GitHub
+
+**Offizielle Resources:**
+- GitHub: Open-Source MCP Server für Box
+- Box Developer Portal: developer.box.com
+- Integration Launch: Announced Mai 1, 2025 (Anthropic Integrations)
+
+---
+
 **Installation (Beispiele):**
 
 **Via Claude Code CLI:**
