@@ -87,6 +87,29 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 
 ---
 
+### 5. 🔄 [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md)
+**Tool-Interaktionen & Synergismen** (NEU!)
+
+- ✅ Slash Commands, Skills, Subagenten, Hooks Integration
+- ✅ Wie Tools miteinander interagieren
+- ✅ SlashCommand Tool für programmatische Aufrufe
+- ✅ Progressive Disclosure System (Skills)
+- ✅ Event-driven Automation (Hooks)
+- ✅ 10 praktische Interaktionsmuster
+- ✅ Decision Matrix: Wann was nutzen
+- ✅ Advanced Patterns & Best Practices
+- ✅ Debugging & Troubleshooting
+
+**Wichtigste Erkenntnisse:**
+- 🔄 Slash Commands können Subagenten orchestrieren
+- 🤖 Claude kann Slash Commands via SlashCommand Tool aufrufen
+- 📚 Skills nutzen @CLAUDE.md für Projekt-Kontext
+- ⚡ Hooks garantieren Automatisierung (nicht LLM-abhängig)
+- 🔒 PreToolUse Hooks können Tools blockieren (Security!)
+- 🎯 Subagenten mit Tool-Isolation für Separation of Concerns
+
+---
+
 ## 🆕 Wichtigste Updates Oktober 2025
 
 ### Claude Code 2.0 (September 2025 Release)
@@ -152,6 +175,7 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 2. **VS Code Extension:** [CLAUDE_CODE.md#vs-code-extension](CLAUDE_CODE.md)
 3. **Checkpoints nutzen:** ESC ESC zum Rewind
 4. **MCP integrieren:** [MCP_GUIDE.md](MCP_GUIDE.md)
+5. **🆕 Tool-Interaktionen:** [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md) → Synergismen verstehen
 
 ### Für Claude Desktop Nutzer
 
@@ -166,6 +190,7 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 2. **Basis:** [CLAUDE_CODE.md](CLAUDE_CODE.md) oder [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md)
 3. **Erweitern:** [MCP_GUIDE.md](MCP_GUIDE.md) für externe Integrationen
 4. **Optimieren:** [WORKFLOWS.md](WORKFLOWS.md) für Best Practices
+5. **🆕 Vertiefen:** [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md) für Tool-Synergismen
 
 ---
 
@@ -228,6 +253,16 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 
 ## 🔄 Changelog
 
+### Version 3.2 (22. Oktober 2025) - Tool-Interaktionen & Synergismen
+- 🔄 **Neue Datei: TOOL_INTERACTIONS.md** - Umfassende Dokumentation aller Tool-Interaktionen
+- 🎯 **SlashCommand Tool** - Wie Claude Slash Commands programmatisch aufrufen kann
+- 🤖 **Skills Progressive Disclosure** - Zwei-Level-System für effiziente Context-Nutzung
+- ⚡ **Hooks Event-Driven Architecture** - PreToolUse, PostToolUse und weitere
+- 🔗 **10 Interaktionsmuster** - Von einfach bis Enterprise-Grade
+- 📊 **Decision Matrix** - Wann welches Tool nutzen
+- 🐛 **Debugging-Guide** - Troubleshooting für alle Tool-Typen
+- ✅ **Best Practices** - Optimale Integration aller Komponenten
+
 ### Version 3.1 (22. Oktober 2025) - Aktuelle Web-Recherche
 - 🔍 **Alle Punkte mit aktueller Dokumentation verifiziert**
 - ⚠️ **"Imagine with Claude"** - Korrigiert als temporäres Feature (war nur Sept 29 - Okt 11, 2025)
@@ -269,4 +304,4 @@ Bei Fragen:
 
 **🎉 Claude Ecosystem Dokumentation - Ready to Use!**
 
-Start: [CLAUDE_CODE.md](CLAUDE_CODE.md) | [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md) | [MCP_GUIDE.md](MCP_GUIDE.md) | [WORKFLOWS.md](WORKFLOWS.md)
+Start: [CLAUDE_CODE.md](CLAUDE_CODE.md) | [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md) | [MCP_GUIDE.md](MCP_GUIDE.md) | [WORKFLOWS.md](WORKFLOWS.md) | 🆕 [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md)
