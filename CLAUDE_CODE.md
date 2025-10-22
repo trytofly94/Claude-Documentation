@@ -185,6 +185,9 @@ Der `.claude/` Ordner ist das Herz der Projektkonfiguration. Hier sind alle stru
 - **Hooks** (in settings.json) reagieren auf Tool-Events
 - **Plugins** können alle Komponenten bündeln (Commands, Agents, Hooks, MCP-Server)
 
+**🆕 Für detaillierte Informationen über Tool-Interaktionen:**
+→ Siehe [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md) für umfassende Dokumentation aller Synergismen und Interaktionsmuster!
+
 ### C) PROJEKT-STRUKTUR
 
 **Settings-Hierarchie (von niedrigster zu höchster Priorität):**

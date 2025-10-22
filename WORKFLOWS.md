@@ -7,6 +7,11 @@ Teil der [Claude Ecosystem Dokumentation](README.md)
 
 ---
 
+**🆕 NEU: Umfassende Tool-Interaktionen-Dokumentation**
+→ Für detaillierte Informationen über Slash Commands, Skills, Subagenten und Hooks Synergismen siehe: [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md)
+
+---
+
 ## SCHRITT 5: INTERAKTIONEN & WORKFLOWS
 
 ### A) CLAUDE DESKTOP + MCP FILESYSTEM
