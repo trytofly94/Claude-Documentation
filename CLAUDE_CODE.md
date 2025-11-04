@@ -1,7 +1,7 @@
 # CLAUDE CODE - Vollständige Dokumentation
 
-**Stand:** 22. Oktober 2025
-**Version:** 3.0
+**Stand:** 4. November 2025
+**Version:** 3.1
 
 Teil der [Claude Ecosystem Dokumentation](README.md)
 
@@ -49,13 +49,49 @@ brew install claude-code
 Tab                # Toggle Extended Thinking für komplexe Tasks
 ```
 
+**🆕 Weitere Commands (2025):**
+```bash
+/export            # Conversation exportieren für Sharing (seit Juli 2025)
+/permissions       # Tool-Permissions interaktiv setzen (Alternative zu settings.json)
+/statusline        # Terminal Status Line customizen
+```
+
 **Interaktive Modi-Shortcuts:**
-- `Shift+Tab`: Wechsel zwischen Permission Modes
+- `Shift+Tab`: Wechsel zwischen Permission Modes (⚠️ **zweimal drücken für Plan Mode!**)
 - `/config`: Öffnet Settings Interface
 - `/allowed-tools`: Tool-Berechtigungen verwalten
 - **`Ctrl+R`**: Searchable Prompt History (v2.0 - frühere Prompts wiederverwenden)
 - **`ESC ESC`**: Quick Checkpoint Rewind (v2.0 - zurück zum letzten State)
 - **`Tab`**: Toggle Extended Thinking (v2.0 - Deep Reasoning aktivieren)
+
+**🆕 Keyboard Shortcuts (2025):**
+```bash
+Ctrl+B             # Background Command starten (interaktiv)
+Ctrl+Z             # Claude Code suspenden (resume mit fg) - ⚠️ NICHT mehr Undo!
+Ctrl+U / Ctrl+_    # Prompt Input Undo (vorher Ctrl+Z)
+```
+
+---
+
+⚠️ **BREAKING CHANGE (Juli 2025): Custom Slash Command Namespacing**
+
+Subdirectories in `.claude/commands/` erstellen jetzt Namespaces:
+
+**Vorher:**
+```
+.claude/commands/frontend/component.md → /component
+```
+
+**Jetzt:**
+```
+.claude/commands/frontend/component.md → /frontend:component
+```
+
+**Migration:**
+- **Option 1:** Flatten deine Command-Struktur (keine Subdirectories)
+- **Option 2:** Update alle Aufrufe mit Namespace-Prefix (z.B. `/frontend:component`)
+
+---
 
 **Kernfähigkeiten:**
 - ✅ Automatisches Lesen aller Projektdateien (kein manuelles Context-Adding)
@@ -375,6 +411,53 @@ Skills können auf projekt-spezifisches Wissen in CLAUDE.md referenzieren:
   - `CLAUDE_ENV_FILE`: Pfad für persistente Env-Vars in Hooks
   - `CLAUDE_CODE_USE_VERTEX=1`: Nutzt Google Vertex AI
   - `CLAUDE_CODE_ENABLE_TELEMETRY`: Telemetrie ein/aus
+
+**🆕 Zusätzliche Environment Variables (2025):**
+
+**USE_BUILTIN_RIPGREP:**
+- **Default:** Enabled (Built-in ripgrep wird verwendet)
+- **Opt-out:** `export USE_BUILTIN_RIPGREP=0` (nutze System ripgrep)
+- **Wann nötig:**
+  - Alpine Linux / musl-basierte Systeme
+  - Custom ripgrep Installation mit speziellen Flags
+  - Debugging von ripgrep-Problemen
+
+**CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR:**
+- **Funktion:** "Freezes" Working Directory für Bash Commands
+- **Verwendung:** `export CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR=1`
+- **Effekt:**
+  - Verhindert automatische Directory-Wechsel durch Claude
+  - Alle Bash Commands starten im gleichen Directory
+  - Nützlich für Monorepos oder spezifische Workflows
+- **Standard:** Disabled
+
+**ANTHROPIC_LOG (statt DEBUG):**
+
+⚠️ **BREAKING CHANGE:**
+
+**Alt (deprecated):**
+```bash
+export DEBUG=true
+```
+
+**Neu:**
+```bash
+export ANTHROPIC_LOG=debug
+```
+
+**Funktion:**
+- Request/Response Logging für Debugging
+- Zeigt API-Calls im Detail
+- Hilft bei Troubleshooting
+
+**Levels:**
+- `debug`: Alle Logs
+- `info`: Standard-Informationen
+- `warn`: Nur Warnungen
+- `error`: Nur Fehler
+
+**Migration:**
+Ersetze alle `DEBUG=true` mit `ANTHROPIC_LOG=debug` in Scripts und Config-Files.
 
 **Konfiguration via CLI:**
 - `/config`: Öffnet Tabbed Settings Interface (im interaktiven Modus)
