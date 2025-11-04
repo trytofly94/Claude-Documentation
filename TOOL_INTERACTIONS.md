@@ -859,6 +859,104 @@ tools: ["Read", "Write", "Bash", "Grep", "Glob"]
 
 ---
 
+### Pattern 7.5: Skills + MCP für End-to-End Workflows
+
+**🆕 Oktober 2025 - Skills & MCP Kombination**
+
+**Use Case:** Quarterly Business Review vollautomatisiert mit Skill-Wissen + MCP-Daten
+
+**Skill: `quarterly-business-review`**
+```markdown
+---
+name: quarterly-business-review
+description: Creates QBRs following company template with standard KPIs
+---
+
+# QBR Skill
+
+## Instructions
+1. Use company template structure (Exec Summary, KPIs, Wins, Challenges, Plan)
+2. Standard KPIs: Revenue, NRR, CAC, LTV, Churn
+3. Apply brand guidelines from assets/brand-guide.pdf
+4. Format as PPTX for executive presentation
+```
+
+**MCP Configuration:**
+```json
+{
+  "mcpServers": {
+    "google-drive": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-google-drive"]
+    },
+    "salesforce": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-salesforce"]
+    },
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-slack"]
+    }
+  }
+}
+```
+
+**Workflow:**
+```
+User: "Create Q4 2025 QBR"
+
+1. Claude matcht Request → QBR Skill aktiviert
+2. Skill definiert: WIE (Struktur, Format, KPIs)
+3. MCP Google Drive: Lädt Q3 QBR als Referenz
+4. MCP Salesforce: Holt aktuelle Sales-Daten (Revenue, Deals, Pipeline)
+5. Skill: Formatiert nach Template, wendet Brand an
+6. Skill: Erstellt Charts & Visualisierungen
+7. MCP Google Drive: Speichert in /QBRs/2025/Q4-QBR.pptx
+8. MCP Slack: Postet Link in #executives Channel
+```
+
+**Weitere Beispiele:**
+
+**Legal Contract Review:**
+```
+Skill: "legal-contract-review" (Kennt Standard-Klauseln, Risiken)
++ MCP Box: Contract Repository
++ MCP Slack: Legal Team Notifications
+
+User uploads contract.pdf
+→ Skill analysiert gegen Standards
+→ Box lädt ähnliche Verträge als Referenz
+→ Skill findet Risiko-Klauseln
+→ Slack notifiziert Legal Team bei Problemen
+```
+
+**Code Modernization:**
+```
+Skill: "js-to-typescript" (Migration Patterns, Best Practices)
++ MCP Filesystem: Read/Write Code
++ MCP GitHub: Issues, PRs, Commits
+
+User: "Modernize src/auth.js"
+→ Skill kennt Migration-Strategie
+→ Filesystem liest alte Dateien
+→ Skill transformiert zu TypeScript
+→ Filesystem schreibt neue Dateien
+→ GitHub erstellt PR mit Changes
+```
+
+**Wann Skills + MCP kombinieren:**
+- ✅ Workflow-Wissen + externe Daten benötigt
+- ✅ Wiederholbare Prozesse auf dynamische Daten
+- ✅ Team-Standards mit Cloud-Integration
+- ✅ End-to-End Automation erwünscht
+
+**Key Insight:**
+- **Skills**: Define "HOW" (Prozess, Format, Standards)
+- **MCP**: Provide "WHERE" (Daten, Tools, Integration)
+- **Claude**: Orchestrates BOTH automatically
+
+---
+
 ## 🚀 ADVANCED PATTERNS
 
 ### Pattern 8: Event-Driven Architecture mit Hooks
