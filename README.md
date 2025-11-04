@@ -1,7 +1,7 @@
 # 📚 CLAUDE ECOSYSTEM DOKUMENTATION
 
-**Stand:** 22. Oktober 2025
-**Version:** 3.0 - Modulare Struktur mit allen Oktober 2025 Updates
+**Stand:** 4. November 2025
+**Version:** 3.3 - Feature-Erweiterung mit Web Version & Breaking Changes
 
 ---
 
@@ -30,8 +30,15 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 - ✅ **API Features** (Context Editing, Memory Tool)
 - ✅ Output Styles & Customization
 - ✅ CLI-Tools Integration
+- 🆕 **Claude Code Web Version** (Browser-basiert, GitHub Integration)
+- 🆕 **GitHub Integration** (@claude Tagging)
+- 🆕 **Erweiterte Konfiguration** (CLAUDE.md Imports)
 
 **Wichtigste Updates:**
+- 🆕 **Claude Code Web Version** (Oktober 2025) - Cloud-basierte Plattform
+- 🆕 **Neue Commands** (/export, /permissions, /statusline)
+- 🆕 **Keyboard Shortcuts** (Ctrl+B, Ctrl+Z, Ctrl+U, Ctrl+_)
+- 🆕 **Environment Variables** (USE_BUILTIN_RIPGREP, etc.)
 - 🆕 Claude Sonnet 4.5 als Default (77.2% SWE-bench)
 - 🆕 VS Code Extension (Beta)
 - 🆕 Checkpoints System (ESC ESC zum Rewind)
@@ -110,7 +117,52 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 
 ---
 
-## 🆕 Wichtigste Updates Oktober 2025
+## 🆕 Wichtigste Updates (Stand: 4. November 2025)
+
+### 🌐 Claude Code Web Version (20. Oktober 2025)
+
+**NEU: Cloud-basierte Coding-Plattform**
+- ✅ Kein lokales Setup nötig - Vollständig im Browser
+- ✅ Native GitHub Repository Integration
+- ✅ Parallele Tasks über mehrere Repositories
+- ✅ Secure Sandbox Environments (Trusted/Custom/No Network)
+- ✅ iOS Mobile App (early stage)
+- ⚠️ Research Preview für Pro & Max Users
+- 📖 **Details:** [CLAUDE_CODE.md - Sektion I](CLAUDE_CODE.md#i-claude-code-web-version-oktober-2025)
+
+**Zugang:** [claude.ai/code](https://claude.ai/code)
+
+---
+
+### 🤖 Claude Haiku 4.5 (15. Oktober 2025)
+
+**Leistungsstarkes Budget-Model:**
+- 🏆 **73.3%** SWE-bench Verified (fast Sonnet 4 Niveau!)
+- ⚡ **4-5x schneller** als Sonnet 4.5
+- 💰 **$1/$5** per million tokens (vs. $3/$15 Sonnet)
+- 📊 **200K context** standard, 1M für Developer Platform
+- 📝 **64K max output** (vs. 8K bei Haiku 3.5)
+- 🧠 **Extended Thinking** erstmals für Haiku verfügbar
+- 🎯 **Free Tier verfügbar** auf claude.ai
+
+**Use Cases:** Schnelle Code-Reviews, Batch-Processing, Cost-sensitive Workloads
+
+---
+
+### ⚠️ Breaking Changes (2025)
+
+**Custom Slash Command Namespacing (Juli 2025):**
+- Subdirectories in `.claude/commands/` erstellen jetzt Namespaces
+- Beispiel: `.claude/commands/frontend/foo.md` → `/frontend:foo` (nicht mehr `/foo`)
+- **Migration:** Flatten Command-Struktur ODER Namespace-Prefix nutzen
+- 📖 [Details in CLAUDE_CODE.md - Sektion A](CLAUDE_CODE.md#a-kernfunktionen--cli-befehle)
+
+**ANTHROPIC_LOG statt DEBUG:**
+- `DEBUG=true` ist deprecated
+- Nutze `ANTHROPIC_LOG=debug` für Request-Logging
+- 📖 [Details in CLAUDE_CODE.md - Sektion D](CLAUDE_CODE.md#c-projekt-struktur)
+
+---
 
 ### Claude Code 2.0 (September 2025 Release)
 
@@ -280,6 +332,34 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 ---
 
 ## 🔄 Changelog
+
+### Version 3.3 (4. November 2025) - Feature-Erweiterung
+
+**Neue Hauptsektionen in CLAUDE_CODE.md:**
+- 🌐 **Sektion I:** Claude Code Web Version (Oktober 2025)
+- 🔗 **Sektion J:** GitHub Integration (@claude Tagging)
+- ⚙️ **Sektion K:** Erweiterte Konfiguration (CLAUDE.md Imports)
+
+**Neue Features dokumentiert:**
+- `/export` Command (Conversation Export)
+- `/permissions` Command (Interaktive Permission-Verwaltung)
+- `/statusline` Command (Custom Terminal Status)
+- **Keyboard Shortcuts:** Ctrl+B, Ctrl+Z, Ctrl+U, Ctrl+_
+- **Environment Variables:** USE_BUILTIN_RIPGREP, CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR
+- **JetBrains Integration:** Basis-Infos hinzugefügt
+
+**Updates & Korrekturen:**
+- Plan Mode korrigiert (Shift+Tab **zweimal** drücken)
+- Stop Hooks Details erweitert (Transcript Path, Exit Code, etc.)
+- Claude Haiku 4.5 Details vervollständigt
+
+**Breaking Changes dokumentiert:**
+- Custom Slash Command Namespacing (Juli 2025)
+- ANTHROPIC_LOG statt DEBUG=true
+
+**Quelle:** GitHub Issue #1 (systematische Feature-Recherche)
+
+---
 
 ### Version 3.2 (22. Oktober 2025)
 - 🔄 **TOOL_INTERACTIONS.md** - Neue Datei für Tool-Synergismen & Interaktionsmuster
