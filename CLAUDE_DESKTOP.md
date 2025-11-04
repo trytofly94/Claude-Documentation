@@ -39,10 +39,71 @@ Claude Desktop ist eine eigenständige Desktop-Anwendung (verfügbar für Window
 
 
 **Verfügbare Modelle (Oktober 2025):**
-- **Claude Sonnet 4.5** (Empfohlen: höchste Intelligenz, Agents & Coding)
-- **Claude Haiku 4.5** (Schnellstes Model, Near-Frontier Performance)
-- **Claude Opus 4.1** (Komplexeste Herausforderungen)
 
+### Claude Sonnet 4.5 (Default)
+- **Empfohlen** für höchste Intelligenz, Agents & Coding
+- **77.2%** SWE-bench Verified (bestes Coding-Model)
+- **Pricing:** $3 Input / $15 Output per million tokens
+
+### Claude Haiku 4.5 (15. Oktober 2025)
+
+**Performance-Highlights:**
+- 🏆 **73.3%** SWE-bench Verified (fast Sonnet 4 Niveau!)
+- ⚡ **4-5x schneller** als Sonnet 4.5
+- 💰 **$1/$5** per million tokens (vs. $3/$15 Sonnet)
+- 📊 **200K context** standard, **1M** für Developer Platform
+- 📝 **64K max output** (vs. 8K bei Haiku 3.5)
+- 🎯 **Free Tier verfügbar** auf claude.ai
+
+**Neue Capabilities:**
+- **Extended Thinking** erstmals für Haiku verfügbar
+- **Computer Use:** 50.7% OSWorld (besser als Sonnet 4!)
+- **Vision:** Multimodal Support
+- **Function Calling:** Vollständig unterstützt
+
+**Technische Details:**
+- **Knowledge Cutoff:** Februar 2025 (einen Monat nach anderen Models)
+- **Streaming:** Ja
+- **Max Tokens:** 64K Output (8x mehr als Haiku 3.5)
+
+**Use Cases:**
+- ✅ Schnelle Code-Reviews
+- ✅ Batch-Processing von Dateien
+- ✅ Cost-sensitive Produktions-Workloads
+- ✅ Free Tier Nutzer (bestes verfügbares Free Model)
+- ✅ Prototyping & Testing
+
+**Model-Vergleich:**
+
+| Feature | Haiku 4.5 | Sonnet 4.5 | Opus 4.1 |
+|---------|-----------|------------|----------|
+| **SWE-bench Verified** | 73.3% | 77.2% | TBD |
+| **Speed** | 🏆 Schnellstes | Mittel | Langsam |
+| **Pricing (Input/Output)** | $1/$5 | $3/$15 | TBD |
+| **Context** | 200K (1M API) | 200K | TBD |
+| **Max Output** | 64K | 8K | TBD |
+| **Extended Thinking** | ✅ | ✅ | ✅ |
+| **Computer Use** | ✅ 50.7% | ✅ | TBD |
+| **Free Tier** | ✅ | ❌ | ❌ |
+
+**Wann Haiku 4.5 nutzen:**
+- Wenn **Speed** wichtiger als letzte 5% Accuracy
+- **Budget-Constraints** (1/3 des Preises von Sonnet)
+- **Batch-Jobs** mit vielen Requests
+- **Free Tier** Entwicklung
+- **Prototyping** & Testing
+
+**Wann Sonnet 4.5 nutzen:**
+- Höchste **Code-Qualität** gefordert
+- **Komplexe Reasoning-Tasks**
+- **Production-kritische** Operationen
+- Längere **autonome** Coding-Sessions
+
+### Claude Opus 4.1
+- **Komplexeste Herausforderungen**
+- Details folgen bei offiziellem Release
+
+---
 
 **Aktuelle Features (2025):**
 - ✅ Agent Skills (Pre-built & Custom für Dokumente: PPTX, XLSX, DOCX, PDF)
