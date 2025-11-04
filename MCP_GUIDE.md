@@ -196,6 +196,203 @@ Prompt: "Plan a Vacation"
 **Callbacks:**
 - ⚠️ Nicht explizit in Core-Spec erwähnt, aber via Sampling möglich
 
+---
+
+### B.1) SKILLS VS. MCP - WANN WAS NUTZEN?
+
+**🆕 Oktober 2025 - Skills & MCP Ökosystem**
+
+Skills und MCP sind **komplementäre Features** die unterschiedliche Probleme lösen. Hier ist der Unterschied:
+
+#### Kernunterschied
+
+| Aspekt | Skills | MCP |
+|--------|--------|-----|
+| **Zweck** | Workflows & Prozesse kodifizieren | Externe Datenquellen/Tools anbinden |
+| **Inhalt** | Anweisungen, Scripts, Assets | Server für APIs, Datenbanken, Services |
+| **Aktivierung** | Automatisch (model-invoked) | Auf Anfrage (tool-invoked) |
+| **Beispiele** | Report-Automation, Brand Guidelines | Google Drive, Slack, GitHub, Filesystem |
+| **Portabilität** | Apps, API, Claude Code | Apps, Claude Code (konfigurierbar) |
+| **Code Execution** | Ja (Scripts in Skills) | Nein (nur Tool-Definitionen) |
+| **Location** | `.claude/skills/` oder UI-Upload | `claude_desktop_config.json` |
+
+#### Skills: "Wie arbeiten wir?"
+
+Skills definieren **Prozesse, Workflows und Best Practices**:
+
+**Use Cases:**
+- 🎯 **Team-Standards**: Coding Conventions, Commit Message Format
+- 📝 **Dokument-Workflows**: Quarterly Business Reviews nach Firmen-Template
+- 🔄 **Wiederholbare Prozesse**: Sprint Planning, Legal Contract Review
+- 🎨 **Brand Compliance**: Logo-Nutzung, Farbpaletten, Tone of Voice
+- 💡 **Domain-Expertise**: SEO-Optimierung, Musik-Komposition
+
+**Beispiel-Skill: "Quarterly Business Review"**
+```markdown
+---
+name: quarterly-business-review
+description: Creates QBRs following company template with standard KPIs
+---
+
+# Quarterly Business Review
+
+## Instructions
+1. Use company QBR template (in assets/qbr-template.xlsx)
+2. Structure: Executive Summary, KPIs, Wins, Challenges, Q+1 Plan
+3. Apply brand guidelines (fonts, colors, logos)
+4. Include standard metrics: Revenue, NRR, CAC, LTV
+5. Format for executive presentation
+```
+
+#### MCP: "Wo sind die Daten?"
+
+MCP-Server verbinden Claude mit **Datenquellen und externen Tools**:
+
+**Use Cases:**
+- 📂 **Filesystem**: Lokale Dateien lesen/schreiben
+- 🔧 **APIs**: GitHub Issues, Slack Messages, Salesforce CRM
+- ☁️ **Cloud Storage**: Google Drive, Dropbox, Box
+- 💾 **Datenbanken**: PostgreSQL, MySQL (via Custom MCP-Server)
+- 🔍 **Web Search**: Brave Search, Exa AI
+
+**Beispiel-MCP-Server: Google Drive**
+```json
+{
+  "mcpServers": {
+    "google-drive": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-google-drive"],
+      "env": {
+        "GOOGLE_CLIENT_ID": "...",
+        "GOOGLE_CLIENT_SECRET": "..."
+      }
+    }
+  }
+}
+```
+
+#### Skills + MCP Kombination
+
+Die **wahre Power** entsteht, wenn Sie beide kombinieren:
+
+**Beispiel 1: QBR-Automation**
+
+```
+Skill: "quarterly-business-review"
+- Definiert QBR-Struktur und Format
+- Kennt Standard-KPIs und Metriken
+- Wendet Brand Guidelines an
+
+MCP: Google Drive + Salesforce
+- Drive: Liefert historische QBRs
+- Salesforce: Liefert aktuelle Sales-Daten
+- Drive: Speichert fertiges QBR-Dokument
+
+Workflow:
+1. User: "Create Q4 2025 QBR"
+2. Claude aktiviert QBR-Skill (Struktur-Wissen)
+3. Claude nutzt Salesforce MCP (Daten holen)
+4. Skill formatiert Output nach Standards
+5. MCP speichert via Google Drive
+```
+
+**Beispiel 2: Legal Contract Review**
+
+```
+Skill: "legal-contract-review"
+- Kennt Standard-Vertragsklauseln
+- Identifiziert Risiko-Patterns
+- Schlägt Schutz-Sprache vor
+
+MCP: Box + Slack
+- Box: Lädt Vertrags-PDFs
+- Box: Greift auf Contract Repository zu
+- Slack: Notifiziert Legal Team
+
+Workflow:
+1. User: "@contract.pdf Review this"
+2. Claude aktiviert Legal Review Skill
+3. MCP lädt PDF aus Box
+4. Skill analysiert gegen Standards
+5. MCP postet Summary in Slack #legal
+```
+
+**Beispiel 3: Code Modernization**
+
+```
+Skill: "code-modernization"
+- Kennt Migration-Patterns (JS → TS)
+- Best Practices für Type Safety
+- Testing-Strategien
+
+MCP: GitHub + Filesystem
+- GitHub: Issues & PRs verwalten
+- Filesystem: Code lesen/schreiben
+- GitHub: Changes committen
+
+Workflow:
+1. User: "Modernize legacy/auth.js"
+2. Skill weiß wie man migriert
+3. MCP liest Files via Filesystem
+4. Skill transformiert Code
+5. MCP committed via GitHub
+```
+
+#### Entscheidungsmatrix
+
+**Nutzen Sie Skills wenn Sie:**
+- ✅ Team-Workflows standardisieren wollen
+- ✅ Brand Guidelines durchsetzen möchten
+- ✅ Wiederholbare Prozesse haben
+- ✅ Domain-Expertise kodifizieren möchten
+- ✅ Code-basierte Transformationen brauchen
+
+**Nutzen Sie MCP wenn Sie:**
+- ✅ Externe Datenquellen anbinden müssen
+- ✅ API-Integrationen benötigen
+- ✅ Lokale Dateien verarbeiten wollen
+- ✅ Cloud-Services nutzen möchten
+- ✅ Real-time Daten abrufen müssen
+
+**Nutzen Sie BEIDE wenn Sie:**
+- 🌟 Komplexe End-to-End Workflows automatisieren
+- 🌟 Prozess-Wissen mit Daten-Zugriff kombinieren
+- 🌟 Wiederholbare Tasks auf externe Systeme anwenden
+- 🌟 Team-Standards mit externen Tools durchsetzen
+
+#### Wichtige Hinweise
+
+**Skills-Limitierungen:**
+- ⚠️ Kein direkter Netzwerkzugriff (keine API-Calls aus Skills)
+- ⚠️ Nur pre-installed Python/Node Packages
+- ⚠️ Laufen in isoliertem Code Execution Container
+
+**MCP-Limitierungen:**
+- ⚠️ MCP-Server können keine Skills direkt aufrufen
+- ⚠️ Jeder Server läuft in separatem Prozess
+- ⚠️ Konfiguration erfordert JSON-Config Files
+
+**Zusammenarbeit:**
+- ✅ Claude orchestriert beide automatisch
+- ✅ Skills nutzen MCP-Tools in Workflows
+- ✅ MCP liefert Daten, Skills definieren Verarbeitung
+
+#### Ressourcen
+
+**Skills Dokumentation:**
+- [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md#d-skills---spezialisierte-fähigkeiten-für-claude) - Detaillierte Skills-Doku
+- [CLAUDE_CODE.md](CLAUDE_CODE.md) - Skills in Claude Code
+- [Skills Blog Post](https://claude.com/blog/skills)
+
+**MCP Dokumentation:**
+- Siehe [VERFÜGBARE MCP-SERVER](#c-verfügbare-mcp-server) unten
+- [MCP Website](https://modelcontextprotocol.io)
+
+**Workflows:**
+- [WORKFLOWS.md](WORKFLOWS.md) - Praktische Beispiele für Skills + MCP
+
+---
+
 ### C) VERFÜGBARE MCP-SERVER
 
 **Official Reference Servers (Anthropic):**

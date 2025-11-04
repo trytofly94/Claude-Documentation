@@ -136,25 +136,154 @@ Der `.claude/` Ordner ist das Herz der Projektkonfiguration. Hier sind alle stru
   ```
 - Können auch global sein: `~/.claude/commands/` für alle Projekte
 
-**3. Skills (`.claude/skills/`)**
-- **Model-invoked**: Claude entscheidet selbst, wann sie verwendet werden
-- Jeder Skill ist ein Ordner mit `SKILL.md` (Pflicht)
-- YAML Frontmatter mit `name` und `description` (entscheidend für Discovery!)
-- Beispiel-Struktur:
-  ```markdown
-  ---
-  name: Generating Commit Messages
-  description: Generates clear commit messages from git diffs. Use when writing commit messages.
-  ---
-  # Generating Commit Messages
-  ## Instructions
-  1. Run `git diff --staged`
-  2. Suggest commit message with:
-     - Summary under 50 characters
-     - Detailed description
-  ```
-- Können auch von Plugins kommen
-- Unterschied zu Commands: Skills werden automatisch verwendet, Commands manuell
+**3. Skills (`.claude/skills/`) - Spezialisierte Fähigkeiten**
+
+**Was sind Skills?**
+
+Skills sind Ordner mit Anweisungen, Scripts und Ressourcen, die Claude automatisch lädt wenn relevant. Sie erweitern Claude mit spezialisierter Expertise für bestimmte Workflows.
+
+**Kerneigenschaften:**
+- 🔄 **Model-invoked**: Claude entscheidet automatisch, wann sie verwendet werden
+- 🎯 **Progressive Disclosure**: Nur relevante Informationen werden geladen
+- 🚀 **Portable**: Gleiche Skills funktionieren in Claude Code, Claude Apps und API
+- 💪 **Composable**: Mehrere Skills können zusammenarbeiten
+
+**Ordnerstruktur:**
+
+```
+~/.claude/skills/                # Global für alle Projekte
+  └── my-skill/
+      ├── SKILL.md              # Hauptdatei (Pflicht)
+      ├── reference.md          # Zusätzliche Dokumentation (Optional)
+      ├── assets/               # Brand Assets, Media (Optional)
+      │   ├── logo.png
+      │   └── templates/
+      ├── data/                 # Lookup-Tabellen, Configs (Optional)
+      │   └── config.json
+      └── scripts/              # Ausführbare Code-Files (Optional)
+          └── process_data.py
+
+.claude/skills/                  # Projekt-spezifisch
+  └── project-skill/
+      └── SKILL.md
+```
+
+**SKILL.md Struktur:**
+
+```markdown
+---
+name: Generating Commit Messages
+description: Generates clear commit messages from git diffs. Use when writing commit messages.
+---
+
+# Generating Commit Messages
+
+## Was dieser Skill macht
+[Kurzbeschreibung für Discovery - Claude scannt dies zuerst]
+
+## Instructions
+1. Run `git diff --staged`
+2. Analyze changes and determine type (feat, fix, refactor, etc.)
+3. Suggest commit message with:
+   - Type and scope in header
+   - Summary under 50 characters
+   - Detailed description of changes
+   - References to issues if applicable
+
+## Best Practices
+- Use conventional commit format
+- Be specific about what changed
+- Explain why, not just what
+
+## Examples
+[Beispiele von guten Commit Messages]
+```
+
+**Skills Installation:**
+
+**Methode 1: Aus Plugin-Marketplace**
+```bash
+# Skills via Plugins installieren
+# Plugins bündeln Commands, Agents, Skills, MCP-Server
+```
+
+**Methode 2: Manuelle Installation**
+```bash
+# Global (für alle Projekte)
+mkdir -p ~/.claude/skills/my-skill
+cd ~/.claude/skills/my-skill
+# SKILL.md erstellen
+
+# Projekt-spezifisch
+mkdir -p .claude/skills/project-skill
+cd .claude/skills/project-skill
+# SKILL.md erstellen
+```
+
+**Methode 3: Von GitHub Repository**
+```bash
+# Beispiel: Anthropics Skills Repository
+git clone https://github.com/anthropics/skills ~/.claude/skills/anthropic-skills
+# oder als Git Submodule im Projekt
+git submodule add https://github.com/anthropics/skills .claude/skills/external
+```
+
+**Skills mit Team teilen:**
+
+```bash
+# Skills im Projekt-Repo
+.claude/skills/
+  └── team-skill/
+      └── SKILL.md
+
+# Team committed Skills ins Git
+git add .claude/skills/
+git commit -m "Add team coding standards skill"
+git push
+
+# Andere Team-Mitglieder
+git pull
+# Skills sind automatisch verfügbar
+```
+
+**Skills Discovery & Activation:**
+
+Claude scannt YAML Frontmatter (`name` & `description`) um zu entscheiden ob ein Skill relevant ist:
+
+```markdown
+---
+name: Database Migrations
+description: Handles PostgreSQL migrations with Prisma. Use for database schema changes.
+---
+```
+
+**💡 Tipp:** Die `description` ist entscheidend! Sie muss klar beschreiben **wann** der Skill verwendet werden soll.
+
+**Skills vs. Commands:**
+- **Skills**: Automatisch aktiviert wenn relevant (model-invoked)
+- **Commands**: Manuell aufgerufen mit `/command-name` (user-invoked)
+
+**Skills & @CLAUDE.md Integration:**
+
+Skills können auf projekt-spezifisches Wissen in CLAUDE.md referenzieren:
+
+```markdown
+# In SKILL.md
+## Instructions
+1. Check project architecture in @CLAUDE.md
+2. Follow coding conventions documented there
+3. Apply project-specific patterns
+```
+
+**Unterschied Claude Code vs. Claude Apps:**
+- **Claude Code**: Filesystem-basiert (`~/.claude/skills/` oder `.claude/skills/`)
+- **Claude Apps**: UI-Upload als ZIP oder Skills API
+- **Portabilität**: Gleiche SKILL.md Struktur funktioniert überall
+
+**Ressourcen:**
+- GitHub: [Example Skills Repository](https://github.com/anthropics/skills)
+- Docs: [Skills Documentation](https://docs.claude.com/en/docs/claude-code/skills)
+- Siehe auch: [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md#d-skills---spezialisierte-fähigkeiten-für-claude) für detaillierte Skills-Dokumentation
 
 **4. Subagenten (`.claude/agents/`)**
 - Markdown-Dateien mit YAML Frontmatter
@@ -1031,7 +1160,7 @@ Powered by **Claude Sonnet 4.5** ermöglicht **30+ Stunden autonomes Coding**.
 **Key Features:**
 - **Sidebar Panel** - Dedicated Claude Code Panel in VS Code
 - **Inline Diffs** - Code-Änderungen direkt im Editor
-- **Plan Mode** - Review von Plänen vor Execution
+- **Plan Mode** - Review von Plänen vor Execution (⚠️ **Shift+Tab zweimal drücken!**)
 - **Auto-Accept** - Optional für vertrauenswürdige Tasks
 - **Real-time Feedback** - Live-Anzeige aller Operationen
 
@@ -1114,6 +1243,58 @@ ESC ESC    # Quick Rewind
 - Tab-Taste für Extended Thinking
 - Ersetzt "think hard" (deprecated)
 - "ultrathink" bleibt verfügbar (max budget)
+
+---
+
+#### 4.1. NEUE KEYBOARD SHORTCUTS (2025)
+
+**Ctrl+B - Background Command:**
+- Startet beliebige Bash Commands im Hintergrund
+- Nicht nur via Hooks, sondern interaktiv während Session
+- Nützlich für: Build-Prozesse, Tests, Server
+
+**Ctrl+Z - Suspend:**
+- Suspended Claude Code Session
+- Resume mit `fg` (standard shell behavior)
+- ⚠️ **Achtung:** Ctrl+Z ist jetzt NICHT mehr Undo!
+
+**Ctrl+U / Ctrl+_ - Prompt Undo:**
+- **Ctrl+U:** Prompt Input löschen (vorher Ctrl+Z)
+- **Ctrl+_:** Alternative Undo (matching zsh behavior)
+- Beide funktionieren identisch
+
+**Migration:**
+Wenn du bisher Ctrl+Z für Undo genutzt hast, nutze jetzt **Ctrl+U** oder **Ctrl+_**.
+
+**Plan Mode Details:**
+- **Shift+Tab zweimal drücken** (nicht nur einmal!)
+- Claude erstellt strukturierten Plan **ohne** Code-Änderungen
+- Trennung von Research/Analysis und Execution
+- Wichtig für Safety-kritische Operationen
+
+---
+
+#### 4.2. JETBRAINS IDE INTEGRATION
+
+**Status:** Offiziell unterstützt
+**IDEs:** IntelliJ IDEA, PyCharm, WebStorm, PhpStorm, etc.
+
+**Setup:**
+Die JetBrains-Integration folgt dem gleichen Prinzip wie die VS Code Extension. Details zur Installation und Nutzung folgen in künftigen Updates.
+
+**Kompatibilität:**
+- Gleiche `.claude` Ordner-Struktur wie VS Code
+- Slash Commands funktionieren
+- Skills & Subagents unterstützt
+- Hooks werden respektiert
+
+**Unterschiede zu VS Code Extension:**
+- IDE-spezifische Features variieren
+- Check JetBrains Marketplace für aktuelle Version
+- Plugin-Name: "Claude Code" (Anthropic)
+
+**Aktuelle Limitation:**
+Die JetBrains-Integration ist weniger ausführlich dokumentiert als die VS Code Extension. Für detaillierte Setup-Guides empfiehlt sich die offizielle Dokumentation oder der JetBrains Marketplace.
 
 ---
 
@@ -1382,30 +1563,201 @@ https://docs.claude.com/en/docs/agents-and-tools/tool-use/memory-tool
 
 ---
 
-### I) WEITERE FEATURES & UPDATES (OKTOBER 2025)
+### I) CLAUDE CODE WEB VERSION (OKTOBER 2025)
 
-**"Imagine with Claude"** (Research Preview)
-- Real-time Software Generation, Max Users only
+**Released:** 20. Oktober 2025
+**Status:** 🆕 Research Preview für Pro & Max Users
+**Zugang:** claude.ai/code
 
-**Claude for Chrome**
-- Jetzt für Max Users, Computer Use Capabilities
+#### Was ist Claude Code Web?
 
-**Claude Agent SDK** (Rebranding)
-- Früher "Claude Code SDK"
-- General-purpose Agent Building
+Cloud-basierte Coding-Plattform ohne lokale Installation:
 
-**Verfügbare Modelle (Update):**
-- Claude Sonnet 4.5 (Default) - 77.2% SWE-bench
-- Claude Opus 4.1
-- Claude Haiku 4.5
+- ✅ Vollständige Claude Code Funktionalität im Browser
+- ✅ GitHub Repository Integration
+- ✅ Parallele Tasks über mehrere Repositories
+- ✅ Automated PR Creation
+- ✅ Secure Sandbox Environments
+- ✅ iOS Mobile App (early stage)
 
-**Consumer Terms Update:**
-- Opt-in Model Training (Free/Pro/Max)
-- 5-Jahr Retention vs. 30 Tage
+#### Setup & Zugang
 
+1. **Voraussetzungen:**
+   - Anthropic Pro oder Max Subscription
+   - GitHub Account für Repository-Integration
 
+2. **Erste Schritte:**
+   - Besuche [claude.ai/code](https://claude.ai/code)
+   - Verbinde GitHub Account
+   - Wähle Repository aus
+   - Starte erste Coding-Session
 
-### I) URSPRÜNGLICHE WEITERE FEATURES
+#### GitHub Integration
+
+**Repository-Zugriff:**
+- Direkter Zugriff auf GitHub Repositories
+- Automatische PR-Erstellung
+- Branch-Management
+- Commit-Historie
+
+**Workflow:**
+1. Repository auswählen
+2. Issue oder Task beschreiben
+3. Claude arbeitet im Sandbox
+4. Review & PR-Erstellung
+5. Merge nach Review
+
+#### Sandbox Environments
+
+**Network Access Modes:**
+
+- **Trusted Network Access:** Voller Internetzugriff
+- **Custom Network Access:** Eingeschränkter Zugriff auf spezifische Domains
+- **No Network Access:** Komplett isoliert
+
+**Sicherheit:**
+- Isolierte Execution Environments
+- Keine persistente Storage ohne Confirmation
+- Audit Logs für alle Aktionen
+
+#### Web vs. CLI vs. VS Code Extension
+
+| Feature | Web Version | CLI | VS Code Extension |
+|---------|------------|-----|-------------------|
+| Installation | ❌ Nicht nötig | ✅ npm install | ✅ Extension Install |
+| GitHub Integration | ✅ Native | 🔄 Via gh CLI | 🔄 Via gh CLI |
+| Parallele Tasks | ✅ Mehrere Repos | ❌ Ein Repo | ❌ Ein Repo |
+| Mobile Access | ✅ iOS App | ❌ | ❌ |
+| Offline-Fähigkeit | ❌ | ✅ | ✅ |
+| Sandbox Security | ✅ Cloud | 🔄 Lokal | 🔄 Lokal |
+| Customization | 🔄 Eingeschränkt | ✅ Vollständig | ✅ Vollständig |
+
+#### Limitierungen (Research Preview)
+
+⚠️ **Wichtige Hinweise:**
+- Research Preview Status - Features können sich ändern
+- Nur für Pro & Max Users
+- iOS App in early stage
+- Web-Version teilt Message Limits mit claude.ai
+
+#### Ressourcen
+
+- **Zugang:** [claude.ai/code](https://claude.ai/code)
+- **Dokumentation:** [docs.claude.com](https://docs.claude.com)
+- **Changelog:** Siehe README.md
+
+---
+
+### J) GITHUB INTEGRATION
+
+#### @claude Tagging in GitHub
+
+**Status:** Community-Feature via Claude Hub und ähnliche Tools
+**Verfügbar:** Mit entsprechenden Webhooks/Apps
+
+**Funktionsweise:**
+
+1. **Setup:**
+   - Installiere GitHub App (z.B. "Claude Hub")
+   - Konfiguriere Webhook zu Claude Code
+   - Authentifizierung
+
+2. **Verwendung in Issues:**
+   ```
+   @claude Please implement the login validation as described above
+   ```
+
+3. **Verwendung in Pull Requests:**
+   ```
+   @claude Review this PR and check for security issues
+   ```
+
+4. **Workflow:**
+   - Tag @claude in Comment
+   - Webhook triggert Claude Code Session
+   - Claude analysiert Issue/PR
+   - Claude erstellt Response als Comment oder neue PR
+   - User reviewed & mergt
+
+**Vorteile:**
+- Nahtlose Integration in GitHub Workflow
+- Kein manuelles Copy-Paste von Issue-Texten
+- Automatische PR-Verlinkung
+- Team-Collaboration verbessert
+
+**Limitierungen:**
+- Benötigt zusätzliche App/Webhook-Setup
+- Nicht offiziell von Anthropic (Community-Tools)
+- Message Limits gelten weiterhin
+- Private Repos benötigen entsprechende Permissions
+
+**Ressourcen:**
+- Claude Hub: [Check GitHub Marketplace]
+- GitHub Apps für Claude: [Marketplace]
+
+---
+
+### K) ERWEITERTE KONFIGURATION
+
+#### CLAUDE.md File Imports (@-Syntax)
+
+**Verfügbar seit:** April 2025
+**Use Case:** Modulare CLAUDE.md Files für große Projekte
+
+**Syntax:**
+
+```markdown
+# In .claude/CLAUDE.md oder CLAUDE.md
+
+@path/to/other/file.md
+@../shared-config.md
+@./modules/backend-config.md
+```
+
+**Funktionsweise:**
+- Claude liest die referenzierten Files zur Laufzeit
+- Inhalte werden inline eingefügt
+- Relative Pfade zu `.claude/` oder Projekt-Root
+- Rekursive Imports möglich (mit Cycle-Detection)
+
+**Beispiel-Struktur:**
+
+```
+my-project/
+├── CLAUDE.md                    # Main config
+├── .claude/
+│   ├── config/
+│   │   ├── backend-rules.md
+│   │   ├── frontend-rules.md
+│   │   └── testing-guidelines.md
+└── README.md
+
+# In CLAUDE.md:
+@.claude/config/backend-rules.md
+@.claude/config/frontend-rules.md
+@.claude/config/testing-guidelines.md
+```
+
+**Vorteile:**
+- Bessere Organisation großer CLAUDE.md Files
+- Wiederverwendung von Config-Snippets
+- Team-Collaboration (verschiedene Bereiche getrennt)
+- Einfachere Wartung
+
+**Best Practices:**
+1. Ein File pro großes Thema (Backend, Frontend, Testing, etc.)
+2. Shared-Configs in separatem Verzeichnis
+3. Klare Namenskonventionen
+4. Dokumentiere Import-Structure im Main CLAUDE.md
+
+**Limitierungen:**
+- Cycle-Detection verhindert A→B→A Imports
+- Alle Files müssen zur Laufzeit verfügbar sein
+- Relative Pfade können bei Move/Rename brechen
+
+---
+
+### K) URSPRÜNGLICHE WEITERE FEATURES
 
 **Plugin-System:**
 - Erweiterung durch Plugins (Commands, Agents, Hooks, MCP-Server)
@@ -1469,6 +1821,49 @@ Beispiel-Anwendungen:
 - Für Environment-Setup und Dependency-Installation
 - Persistente Environment Variables via `CLAUDE_ENV_FILE`
 - Unterscheidung Local vs. Remote via `CLAUDE_CODE_REMOTE`
+
+**SessionEnd Hooks (Stop Hooks):**
+
+**Trigger:** Bei Session-Ende
+
+**Events:**
+- User beendet Session manuell
+- `/clear` Command
+- Loop endet mit Tool Call
+- Error/Crash
+
+**Verfügbare Daten:**
+
+sessionEnd Hook erhält:
+- **Transcript Path:** Voller Pfad zur Conversation
+- **Exit Code:** 0 = normal, 1 = error
+- **Session Duration:** Gesamtdauer der Session
+- **Total Messages Count:** Anzahl aller Messages
+- **Total Tokens Used:** Token-Verbrauch (falls verfügbar)
+
+**Beispiel - Transcript Archivierung:**
+
+```bash
+#!/bin/bash
+# .claude/hooks/sessionEnd.sh
+
+# Archiviere Transcript nach Session-Ende
+TRANSCRIPT_PATH=$1
+ARCHIVE_DIR="$HOME/.claude-transcripts"
+
+if [ -f "$TRANSCRIPT_PATH" ]; then
+  mkdir -p "$ARCHIVE_DIR"
+  TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+  cp "$TRANSCRIPT_PATH" "$ARCHIVE_DIR/session_$TIMESTAMP.json"
+  echo "Transcript archived to $ARCHIVE_DIR/session_$TIMESTAMP.json"
+fi
+```
+
+**Use Cases:**
+- Automatic Transcript Backup
+- Session Metrics Collection
+- Cleanup nach Session
+- Notification bei langen Sessions
 
 **Context Management:**
 - Automatisches Lesen relevanter Dateien

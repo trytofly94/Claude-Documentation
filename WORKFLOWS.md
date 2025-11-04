@@ -383,6 +383,333 @@ IT erstellt ein "Onboarding"-Dokument in Claude Desktop Projects:
 
 ---
 
+### D) SKILLS-BASIERTE WORKFLOWS
+
+**🆕 Oktober 2025 - Skills Feature Integration**
+
+Skills ermöglichen wiederholbare, spezialisierte Workflows über alle Claude-Produkte hinweg.
+
+#### Workflow 1: Custom Skill entwickeln
+
+**Ziel:** Einen team-spezifischen Workflow als Skill erstellen
+
+**Schritte:**
+
+1. **Prozess dokumentieren**
+   - Templates sammeln (Excel, PPTX, Brand Guidelines)
+   - Workflow-Schritte aufschreiben
+   - Beispiele von guter Arbeit sammeln
+
+2. **Skill-Creator aktivieren**
+   ```
+   Settings > Capabilities > Skills > "skill-creator" aktivieren
+   ```
+
+3. **Mit Claude konversieren**
+   ```
+   User: "Create a skill for our weekly status reports"
+
+   Claude: "I'll help create that skill. Questions:
+   1. What's the standard structure?
+   2. Which KPIs should be included?
+   3. Do you have a template I should reference?"
+
+   User: [Uploads template.xlsx]
+   "Structure: Executive Summary, Progress, Blockers, Next Week.
+   KPIs: Velocity, Bug Count, Deployment Frequency"
+   ```
+
+4. **Skill downloaden & installieren**
+   - ZIP-Datei herunterladen
+   - **Claude Code**: Entpacken nach `~/.claude/skills/weekly-status/`
+   - **Claude Desktop/Apps**: Via Settings > Capabilities > Skills hochladen
+
+5. **Testen & Iterieren**
+   - Neue Konversation: "Create this week's status report"
+   - Verify: "Using [weekly-status]" erscheint in Thinking
+   - Falls Anpassungen nötig: Zurück zu ursprünglicher Konversation
+
+**Ergebnis:** Team-weiter, konsistenter Workflow
+
+---
+
+#### Workflow 2: Skills im Team teilen (Claude Code)
+
+**Ziel:** Skills git-basiert im Team verteilen
+
+**Setup:**
+
+```bash
+# In Projekt-Repo
+mkdir -p .claude/skills
+
+# Skill-Ordner erstellen
+.claude/skills/
+  ├── coding-standards/
+  │   ├── SKILL.md
+  │   └── eslintrc.json
+  ├── commit-messages/
+  │   └── SKILL.md
+  └── testing-guidelines/
+      └── SKILL.md
+```
+
+**SKILL.md Beispiel:**
+```markdown
+---
+name: Company Coding Standards
+description: Applies company coding conventions. Use when writing code.
+---
+
+# Company Coding Standards
+
+## Instructions
+1. Check @CLAUDE.md for project-specific architecture
+2. Follow ESLint config (in this skill directory)
+3. Naming conventions:
+   - Components: PascalCase
+   - Hooks: camelCase with "use" prefix
+   - Constants: UPPER_SNAKE_CASE
+4. Always add JSDoc comments for public APIs
+5. Write tests alongside features
+
+## Examples
+[Code-Beispiele mit korrektem Style]
+```
+
+**Workflow:**
+```bash
+# Skills committen
+git add .claude/skills/
+git commit -m "Add company coding standards skill"
+git push
+
+# Team-Mitglieder
+git pull
+# Skills sind automatisch verfügbar in Claude Code
+```
+
+**Vorteile:**
+- ✅ Versioniert mit Code
+- ✅ Konsistenz im Team
+- ✅ Automatische Distribution
+- ✅ Code-Review für Skills möglich
+
+---
+
+#### Workflow 3: Skills + MCP End-to-End Automation
+
+**Ziel:** Quarterly Business Reviews vollständig automatisieren
+
+**Setup:**
+
+**Skill:** `quarterly-business-review`
+```markdown
+---
+name: quarterly-business-review
+description: Creates QBRs following company template
+---
+
+# QBR Skill
+
+## Instructions
+1. Use template from assets/qbr-template.xlsx
+2. Structure: Exec Summary, KPIs, Wins, Challenges, Plan
+3. Standard KPIs: Revenue, NRR, CAC, LTV, Churn
+4. Apply brand guidelines (colors, fonts, logos)
+5. Export as PPTX for executive presentation
+```
+
+**MCP-Server:** Google Drive + Salesforce
+```json
+{
+  "mcpServers": {
+    "google-drive": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-google-drive"]
+    },
+    "salesforce": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-salesforce"]
+    }
+  }
+}
+```
+
+**Workflow:**
+```
+User: "Create Q4 2025 QBR"
+
+Claude:
+1. Aktiviert QBR-Skill automatisch (Struktur-Wissen)
+2. MCP: Lädt Q3 QBR aus Google Drive (Referenz)
+3. MCP: Holt aktuelle Sales-Daten aus Salesforce
+4. Skill: Formatiert nach Template
+5. Skill: Wendet Brand Guidelines an
+6. Skill: Erstellt PPTX mit Charts
+7. MCP: Speichert in Google Drive > QBRs/2025/Q4-QBR.pptx
+8. Optional: MCP Slack Notification an #executives
+```
+
+**Zeitersparnis:** 4 Stunden manueller Arbeit → 5 Minuten
+
+---
+
+#### Workflow 4: API-basierte Skill-Verwaltung (Enterprise)
+
+**Ziel:** Skills programmatisch deployen und versionieren
+
+**Setup:**
+
+```python
+import anthropic
+import os
+
+client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+
+# Skill-Content laden
+skill_content = """
+---
+name: compliance-checker
+description: Checks documents against compliance requirements
+---
+# Compliance Checker
+[... Skill-Inhalt ...]
+"""
+
+# Skill erstellen
+skill_v1 = client.beta.skills.create(
+    name="compliance-checker",
+    content=skill_content,
+    headers={"anthropic-beta": "skills-2025-10-02"}
+)
+
+print(f"Skill created: {skill_v1.id}")
+```
+
+**A/B Testing:**
+```python
+# Version 2 mit Verbesserungen
+skill_v2 = client.beta.skills.update(
+    skill_id=skill_v1.id,
+    version="v2",
+    content=improved_content
+)
+
+# Performance messen
+# Nach Evaluation: Default setzen
+if v2_performance > v1_performance:
+    client.beta.skills.set_default(
+        skill_id=skill_v1.id,
+        version="v2"
+    )
+```
+
+**Team-Distribution:**
+```python
+# Skills für alle Team-Mitglieder deployen
+team_api_keys = [
+    "key-user-1",
+    "key-user-2",
+    "key-user-3"
+]
+
+for api_key in team_api_keys:
+    team_client = anthropic.Anthropic(api_key=api_key)
+    team_client.beta.skills.create(
+        name="team-standard-skill",
+        content=skill_content,
+        headers={"anthropic-beta": "skills-2025-10-02"}
+    )
+```
+
+**Vorteile:**
+- 🚀 Automatisiertes Deployment
+- 📊 Versionierung & Rollbacks
+- 🧪 A/B Testing möglich
+- 🔄 CI/CD Integration
+
+---
+
+#### Workflow 5: Skills für spezielle Domains
+
+**Legal Team:**
+```markdown
+Skill: "legal-contract-review"
+- Kennt Standard-Klauseln
+- Identifiziert Risiken
+- Schlägt Schutzsprache vor
+
++ MCP: Box (Contract Repository)
++ MCP: Slack (Legal Team Notifications)
+
+Workflow: Upload Vertrag → Review → Slack Alert bei Risiken
+```
+
+**DevOps Team:**
+```markdown
+Skill: "deployment-checklist"
+- Pre-deployment Checks
+- Post-deployment Verification
+- Rollback-Prozeduren
+
++ MCP: GitHub (PR Status)
++ MCP: Kubernetes (Deployment Status)
+
+Workflow: /deploy prod → Checklist → Auto-Deploy → Verification
+```
+
+**Marketing Team:**
+```markdown
+Skill: "brand-compliance"
+- Logo-Nutzung Guidelines
+- Tone of Voice Regeln
+- Approved Messaging
+
++ MCP: Google Drive (Brand Assets)
++ MCP: Figma (Design Templates)
+
+Workflow: Content-Erstellung → Brand-Check → Auto-Format
+```
+
+---
+
+#### Best Practices für Skills-Workflows
+
+**Skill-Erstellung:**
+- ✅ Klare, spezifische `description` für Discovery
+- ✅ Beispiele in SKILL.md inkludieren
+- ✅ Edge Cases dokumentieren
+- ✅ @CLAUDE.md für projekt-spezifisches Wissen nutzen
+
+**Team-Distribution:**
+- ✅ Git für Claude Code Skills (Versionskontrolle)
+- ✅ Skills API für programmatische Verwaltung
+- ✅ Dokumentation im Repo README
+- ✅ Code-Review auch für Skills
+
+**Skills + MCP:**
+- ✅ Skills definieren "Wie", MCP liefert "Daten"
+- ✅ Kombination für End-to-End Automation
+- ✅ Testing in Sandbox vor Production
+- ✅ Fallbacks für MCP-Ausfälle planen
+
+**Wartung:**
+- ✅ Skills regelmäßig aktualisieren
+- ✅ Feedback von Nutzern einarbeiten
+- ✅ Performance-Metriken tracken (wenn API)
+- ✅ Alte Versionen archivieren aber verfügbar halten
+
+---
+
+**Weitere Ressourcen:**
+- [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md#d-skills---spezialisierte-fähigkeiten-für-claude) - Detaillierte Skills-Dokumentation
+- [CLAUDE_CODE.md](CLAUDE_CODE.md) - Skills in Claude Code
+- [MCP_GUIDE.md](MCP_GUIDE.md#b1-skills-vs-mcp---wann-was-nutzen) - Skills vs. MCP Unterschiede
+- [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md) - Tool-Synergismen
+
+---
+
 ## SCHRITT 6: PRAKTISCHE ASPEKTE
 
 ### B) KONFIGURATIONSDATEIEN - ÜBERSICHT

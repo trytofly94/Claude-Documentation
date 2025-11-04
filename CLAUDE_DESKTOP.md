@@ -206,50 +206,301 @@ pip install server-name
 - **Transparenz**: Anzeige welcher Server welche Tools bereitstellt
 - **Sichere Ausführung**: Tools laufen mit definierten Permissions
 
-### D) SKILLS & CUSTOM INSTRUCTIONS
+### D) SKILLS - SPEZIALISIERTE FÄHIGKEITEN FÜR CLAUDE
 
-**Agent Skills in Claude Desktop:**
+**🆕 Oktober 16, 2025 - Agent Skills Feature Launch**
 
-Agent Skills sind filesystem-basierte Ressourcen, die Claude domänen-spezifische Expertise verleihen. Unterschied zu Prompts: Skills laden on-demand und eliminieren wiederholte Anweisungen über mehrere Konversationen hinweg.
+**Was sind Skills?**
 
-**Pre-built Agent Skills (Anthropic):**
+Agent Skills (oft kurz "Skills" genannt) sind Ordner mit Anweisungen, Scripts und Ressourcen, die Claude laden kann, wenn sie für eine Aufgabe relevant sind. Skills machen Claude zu einem Spezialisten für bestimmte Workflows.
+
+**Kernkonzept:**
+Skills sind wie individuelles Onboarding-Material, mit dem Sie Expertise paketieren können. Claude scannt verfügbare Skills und lädt nur die relevanten Informationen, wenn sie benötigt werden.
+
+**Eigenschaften von Skills:**
+- 🔄 **Composable**: Skills können zusammenarbeiten - Claude identifiziert automatisch welche Skills benötigt werden und koordiniert deren Nutzung
+- 🚀 **Portable**: Gleiches Format überall - einmal erstellt, nutzbar in Claude Apps, Claude Code und API
+- ⚡ **Efficient**: Progressive Disclosure - lädt nur was benötigt wird, wann es benötigt wird
+- 💪 **Powerful**: Skills können ausführbaren Code enthalten für Tasks, bei denen traditionelles Programming zuverlässiger ist als Token-Generierung
+
+**Wie Skills funktionieren:**
+
+Während der Arbeit an Tasks scannt Claude verfügbare Skills, um relevante Matches zu finden. Wenn ein Skill passt, lädt Claude nur die minimalen Informationen und Files die benötigt werden - Claude bleibt schnell, während spezialisierte Expertise verfügbar wird.
+
+**Skills vs. Prompts:**
+- **Prompts**: Müssen bei jeder Konversation wiederholt werden
+- **Skills**: Laden automatisch on-demand über mehrere Konversationen hinweg
+
+---
+
+#### Pre-built Agent Skills (Anthropic)
+
 Verfügbar für alle User auf claude.ai und Claude Desktop:
-- **PowerPoint (PPTX)**: Präsentations-Erstellung und -Bearbeitung
-- **Excel (XLSX)**: Spreadsheet-Operationen und Datenanalyse
+
+- **PowerPoint (PPTX)**: Professionelle Präsentations-Erstellung und -Bearbeitung
+- **Excel (XLSX)**: Spreadsheet-Operationen, Formeln und Datenanalyse
 - **Word (DOCX)**: Dokument-Erstellung und -Bearbeitung
-- **PDF**: PDF-Manipulation und -Extraktion
+- **PDF**: PDF-Manipulation, -Extraktion und fillable PDFs
 
-Diese Skills arbeiten automatisch im Hintergrund bei Dokument-Erstellung.
+Diese Skills arbeiten automatisch im Hintergrund, wenn Claude Dokumente erstellt oder bearbeitet. Sie sind für alle Nutzer verfügbar.
 
-**Custom Skills:**
+---
+
+#### Custom Skills erstellen
 
 **Verfügbarkeit:**
-- Pro, Max, Team, Enterprise Plans (mit Code Execution aktiviert)
-- ⚠️ **Wichtig**: Custom Skills sind **individuell pro Nutzer**, NICHT org-weit
-- Keine zentrale Admin-Verwaltung für Custom Skills in Claude.ai
+- Pro, Max, Team, Enterprise Plans
+- Erfordert Code Execution Tool aktiviert
+- ⚠️ **Wichtig**: Custom Skills sind **individuell pro Nutzer**, NICHT org-weit (Enterprise-Features in Arbeit)
+
+**Zwei Wege zum Erstellen von Skills:**
+
+**1. Skill-Erstellung durch Konversation (Empfohlen)**
+Der einfachste Weg - beschreiben Sie Ihren Workflow natürlich, Claude erstellt die Skill-Struktur automatisch.
+
+**2. Manuelle Erstellung**
+Volle Kontrolle durch selbst geschriebene SKILL.md Files und Struktur.
+
+---
+
+#### Skill-Erstellung durch Konversation
+
+**Schritt 1: Skill-Creator aktivieren**
+
+1. Gehen Sie zu `Settings` > `Capabilities` > `Skills`
+2. Aktivieren Sie "skill-creator" Skill
+3. Dieser Skill gibt Claude die Fähigkeit, korrekt formatierte Skills für Sie zu erstellen
+
+**Schritt 2: Konversation starten**
+
+Öffnen Sie einen neuen Chat und sagen Sie etwas wie:
+- "Ich möchte einen Skill für Quarterly Business Reviews erstellen"
+- "Ich brauche einen Skill der weiß, wie man Kundenfeedback analysiert"
+- "Create a skill for database migration workflows"
+
+**Was Sie bereitstellen sollten:**
+- Templates die Sie verwenden
+- Beispiele Ihrer besten Arbeit
+- Brand Guidelines die befolgt werden sollen
+- Datenfiles als Referenz
+- Erwähnung von Tools die Claude nutzen soll (via MCP)
+
+💡 **Tipp:** Wenn Sie unsicher sind was Sie inkludieren sollen, fragen Sie Claude um Guidance!
+
+**Schritt 3: Claude's Fragen beantworten**
+
+Claude wird Details zu Ihrem Prozess erfragen. Geben Sie genug Details, damit jemand fähiger aber unvertrauter Ihrem Ansatz folgen kann.
+
+**Typische Fragen:**
+- "Können Sie Beispiele geben, wann Sie diesen Skill nutzen würden?"
+- "Was macht Output gut für diese Art von Arbeit?"
+- "Welche Schritte folgen Sie typischerweise?"
+- "Gibt es spezielle Error-Handling Anforderungen?"
+
+**Beispiel-Dialog:**
+```
+User: "Create a skill for quarterly business reviews"
+
+Claude: "I'll help you create a QBR skill. Let me ask a few questions:
+
+1. What data sources do you typically use? (Analytics platforms, CRM, etc.)
+2. What's your standard QBR structure? (Sections, format)
+3. Should the skill follow specific brand guidelines?
+4. Do you have template documents I should reference?"
+
+User: [Uploads QBR template + brand guide]
+"We use Google Analytics and Salesforce. Standard structure:
+Executive Summary, KPIs, Wins, Challenges, Next Quarter Plan.
+Please follow our brand guide."
+
+Claude: "Perfect! I'll create a skill that:
+- Structures QBRs with your 5 sections
+- Applies your brand guidelines
+- Knows how to request GA and Salesforce data
+- Uses your template format
+
+[Generiert Skill-Package]
+```
+
+**Schritt 4: Skill wird gebaut**
+
+Claude erstellt automatisch:
+- **SKILL.md** File mit allen Instruktionen
+- Organisiert bereitgestellte Materialien
+- Generiert Code für konsistente Operationen
+- Paketiert alles als ZIP-Datei
+
+**Schritt 5: Aktivieren und Testen**
+
+1. **Download**: ZIP-Datei herunterladen
+2. **Upload**: In Settings > Capabilities > Skills hochladen
+3. **Test**: Neue Konversation starten wo Skill relevant ist
+4. **Verifizieren**: Sehen Sie "Using [skill name]" in Claude's Thinking
+5. **Iterieren**: Falls etwas nicht passt, im ursprünglichen Chat anpassen lassen
+
+**Skill-Beispiele die Sie erstellen können:**
+
+| Use Case | Beschreibung |
+|----------|--------------|
+| **CRM Automation** | Kontakte erstellen, Opportunities aktualisieren, Datenstandards einhalten |
+| **Legal Contract Review** | Verträge gegen Standard-Terms prüfen, riskante Klauseln identifizieren |
+| **Sprint Planning** | Team Velocity berechnen, Arbeit schätzen, Kapazität zuweisen, Planning Docs generieren |
+| **SEO Content** | Opportunities analysieren, für Search Intent strukturieren, Brand Voice beibehalten |
+| **Music Composition** | Original-Tracks mit realistischen Instrumenten, Genre-Konventionen anwenden |
+| **Report Automation** | Monatliche Daten sammeln, Berechnungen durchführen, Visualisierungen erstellen, Template formatieren |
+| **Skill Reviewer** | Andere Skills evaluieren, Verbesserungen vorschlagen, Edge Cases identifizieren |
+
+---
+
+#### Was Sie in einem Skill inkludieren können
+
+Skills bündeln drei Arten von Content - Instruktionen, Referenzmaterialien und Scripts.
+
+**1. Instruktionen (SKILL.md - Pflicht)**
+
+Jeder Skill braucht eine SKILL.md Datei die Ihren Prozess erklärt.
+
+**Struktur:**
+```markdown
+# Skill Name
+## Was dieser Skill macht
+[Kurzbeschreibung - Claude scannt dies zuerst für Relevanz-Check]
+
+## Anweisungen
+[Detaillierte Prozess-Beschreibung]
+[Schritt-für-Schritt Workflows]
+[Best Practices]
+[Error-Handling Guidelines]
+```
+
+**2. Referenzmaterialien und Assets (Optional)**
+
+Manchmal reichen Instruktionen allein nicht - Claude braucht tatsächliche Files als Referenz oder für den Output.
+
+**Was Sie inkludieren können:**
+- **Brand Assets**: Font-Files, Logos, Farbpaletten, Design-Templates
+- **Referenzdokumente**: Policy Guides, Workflow-Prozeduren, Datenbank-Schemas
+- **Templates**: Spreadsheets mit Formeln, Präsentations-Layouts, Dokument-Styles
+- **Datenfiles**: CSV Lookup-Tabellen, JSON Configs, Pricing-Datenbanken
+- **Media Files**: Audio-Samples, Bilder, Video-Clips
+
+Claude entscheidet ob Guidance in SKILL.md embedded wird oder als separates Referenz-File gebündelt wird.
+
+**3. Scripts (Automatisch generiert)**
+
+Ausführbare Code-Files die Claude laufen lassen kann, um komplexe Operationen zuverlässiger zu handhaben als durch Instruktionen allein.
+
+**Sie müssen diese NICHT selbst schreiben!** Wenn Sie Tasks beschreiben die Scripts benötigen, erkennt Claude dies und erstellt den Code automatisch.
+
+**Typische Script-Typen:**
+- **Data Work**: Daten bereinigen, Berechnungen durchführen, Charts und Dashboards erstellen
+- **Document Work**: File-Processing wie Batch-Editing und Formatierung anwenden
+- **Integrations**: Zu anderen Tools verbinden, Daten von externen Quellen fetchen
+- **Media Processing**: Bilder transformieren, Videos editieren, Audio generieren
+
+---
+
+#### Skill-Struktur und Architektur
 
 **Upload-Methode (Claude.ai/Desktop):**
-- Via Settings > Features
+- Via Settings > Features > Skills
 - Als ZIP-Datei hochladen
-- Skill-Struktur im ZIP:
-  ```
-  my-skill/
-  ├── SKILL.md (erforderlich)
-  ├── reference.md (optional)
-  ├── scripts/ (optional)
-  └── templates/ (optional)
-  ```
 
-**Skill-Architektur:**
-- Filesystem-basiert im VM Environment
-- **Progressive Disclosure**: Information wird stufenweise geladen
-- **Kein Netzwerkzugriff**: Skills können keine API-Calls machen
-- **Keine Runtime Package Installation**: Nur pre-installed Packages
+**Skill-Ordnerstruktur:**
+```
+my-skill/
+├── SKILL.md              # Hauptinstruktionen (Pflicht)
+├── reference.md          # Zusätzliche Dokumentation (Optional)
+├── assets/               # Brand Assets, Media (Optional)
+│   ├── logo.png
+│   ├── fonts/
+│   └── templates/
+├── data/                 # Lookup-Tabellen, Configs (Optional)
+│   ├── config.json
+│   └── pricing.csv
+└── scripts/              # Ausführbare Code-Files (Optional)
+    ├── process_data.py
+    └── generate_report.js
+```
+
+**Technische Details:**
+- **Filesystem-basiert**: Skills laufen im VM Environment
+- **Progressive Disclosure**: Information wird stufenweise geladen, nur wenn benötigt
+- **Kein Netzwerkzugriff**: Skills können keine direkten API-Calls machen
+- **Keine Runtime Package Installation**: Nur pre-installed Packages verfügbar
+- **Code Execution**: Erfordert Code Execution Tool (Beta)
 
 **Unterschied Claude Code vs. Claude.ai/Desktop:**
-- **Claude Code**: Filesystem-basiert (persönlich/projekt), kein API-Upload
-- **Claude.ai**: Workspace-wide via API, individuell per Nutzer via UI
-- **Claude Desktop**: Gleich wie claude.ai (individuell per Nutzer)
+- **Claude Code**: Filesystem-basiert in `~/.claude/skills/`, kein API-Upload
+- **Claude.ai/Desktop**: Workspace-wide via Skills API, individuell per Nutzer via UI
+- **Portabilität**: Gleiche Skill-Struktur funktioniert überall
+
+---
+
+#### Skills in Claude Apps nutzen
+
+**Aktivierung:**
+
+1. Gehen Sie zu `Settings` > `Capabilities` > `Skills`
+2. Aktivieren Sie gewünschte Skills (Pre-built oder Custom)
+3. **Admin-Freigabe**: Bei Team/Enterprise muss Admin Skills org-weit aktivieren
+
+**Automatische Skill-Auswahl:**
+
+Claude wählt automatisch relevante Skills basierend auf Ihrem Task - **keine manuelle Auswahl nötig**.
+
+**Sichtbarkeit:**
+
+Sie sehen Skills in Claude's **Chain of Thought** während der Arbeit:
+```
+🧠 Thinking: Using [quarterly-business-review] skill...
+- Loading QBR structure template
+- Applying brand guidelines
+- Fetching KPI data format
+```
+
+**Skill-Sichtbarkeit Settings:**
+
+In den Settings können Sie aktivierte Skills sehen und verwalten:
+- **Pre-built Skills**: PowerPoint, Excel, Word, PDF
+- **Custom Skills**: Ihre hochgeladenen Skills
+- **skill-creator**: Skill für Skill-Erstellung
+
+**💡 Best Practice:**
+
+Aktivieren Sie nur Skills die Sie regelmäßig nutzen. Zu viele aktive Skills können die Scan-Performance beeinträchtigen.
+
+---
+
+#### Skills & MCP Kombination
+
+**Interaktion:**
+
+Skills und MCP-Server können zusammenarbeiten, laufen aber in getrennten Umgebungen:
+
+- **Skills**: Laufen im Code Execution Container
+- **MCP-Server**: Separate Prozesse mit Tool-Definitionen
+- **Skills können keine direkten MCP-Calls machen**
+- **Aber**: MCP-Tools können in Workflows mit Skills kombiniert werden
+
+**Beispiel-Workflow:**
+
+```
+Skill: "quarterly-business-review"
+- Definiert QBR-Struktur und Formatierung
+- Kennt Standard-KPIs und Metriken
+
+MCP: Google Drive Server
+- Liefert historische QBR-Daten
+- Speichert fertige QBR-Reports
+
+Zusammenarbeit:
+1. User: "Create Q4 2025 QBR"
+2. Claude aktiviert QBR-Skill (Struktur-Wissen)
+3. Claude nutzt Google Drive MCP (Daten abrufen)
+4. Skill formatiert Output nach Standards
+5. MCP speichert finales Dokument
+```
 
 **Custom Instructions / Styles:**
 
@@ -261,12 +512,6 @@ Diese Skills arbeiten automatisch im Hintergrund bei Dokument-Erstellung.
 **System Prompts:**
 - ⚠️ **Hinweis**: Für Claude.ai/Desktop werden System Prompts NICHT veröffentlicht
 - Claude Code: CLAUDE.md oder `--append-system-prompt` für Custom Instructions
-
-**Interaktion Skills & MCP:**
-- Skills laufen im Code Execution Container
-- MCP-Server sind separate Prozesse
-- Skills können keine direkten MCP-Calls machen
-- Aber: MCP-Tools können in Workflows mit Skills kombiniert werden
 
 ---
 
@@ -498,8 +743,86 @@ Für jetzt Skills API nutzen für programmatische Distribution. Sobald Enterpris
 - ✅ Skills für wiederkehrende Aufgaben erstellen
 - ✅ Skills API nutzen für Team-Distribution
 - ✅ Versionierung für Updates verwenden
-- ✅ Box Integration für Content-Management
+- ✅ Testen Sie Skills in Sandbox-Umgebung vor Produktions-Nutzung
+- ✅ Dokumentieren Sie Use Cases und Limitationen
+- ✅ Nutzen Sie skill-creator für konsistente Struktur
 
+---
+
+#### Security & Vertrauenswürdigkeit
+
+**⚠️ Wichtiger Hinweis:**
+
+Skills haben Zugriff auf **Code Execution** - das macht sie mächtig, erfordert aber Vorsicht.
+
+**Sicherheitsrichtlinien:**
+- ✅ **Nur vertrauenswürdige Quellen**: Skills nur von vertrauenswürdigen Quellen nutzen
+- ✅ **Anthropic Pre-built Skills**: Vollständig geprüft und sicher
+- ✅ **Custom Skills**: Prüfen Sie Code in Scripts-Ordner vor Upload
+- ✅ **Team Skills**: Interne Review-Prozesse etablieren
+- ✅ **Externe Skills**: Mit Vorsicht behandeln, Code-Review durchführen
+
+**Code Execution Environment:**
+- Skills laufen in isoliertem VM Environment
+- Kein Netzwerkzugriff (keine API-Calls)
+- Nur pre-installed Packages verfügbar
+- Filesystem-Zugriff limitiert
+
+**Best Practices für Sicherheit:**
+1. Skills vor Upload reviewen
+2. Test in isolierter Umgebung
+3. Keine sensitive Daten in Skills hardcoden
+4. Regelmäßige Updates bei Security-Fixes
+5. Audit-Logs nutzen (wenn verfügbar)
+
+---
+
+#### Ressourcen & Weiterführende Dokumentation
+
+**Offizielle Dokumentation:**
+- Blog Post: [Introducing Agent Skills](https://claude.com/blog/skills)
+- Support: [Skills User Guide](https://support.claude.com/en/articles/12580051-teach-claude-your-way-of-working-using-skills)
+- Support: [Creating Skills through Conversation](https://support.claude.com/en/articles/12599426-how-to-create-a-skill-with-claude-through-conversation)
+- Support: [Creating Custom Skills](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
+- API Docs: [Skills API Guide](https://docs.claude.com/en/api/skills-guide)
+- Developer Docs: [Agent Skills Overview](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview)
+- Best Practices: [Skills Authoring Guide](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/best-practices)
+
+**Code & Beispiele:**
+- GitHub: [Example Skills Repository](https://github.com/anthropics/skills)
+- Cookbooks: [Skills Cookbooks](https://github.com/anthropics/claude-cookbooks/tree/main/skills)
+- Anthropic Academy: [Build with Claude Course](https://www.anthropic.com/learn/build-with-claude)
+
+**Engineering Deep-Dive:**
+- [Equipping Agents for the Real World with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills)
+
+**Video-Tutorials:**
+- [Agent Skills: Specialized capabilities you can customize](https://www.youtube.com/watch?v=IoqpBKrNaZI)
+- [Creating custom Skills with Claude](https://www.youtube.com/watch?v=kS1MJFZWMq4)
+
+---
+
+### E) BOX INTEGRATION SKILLS
+
+**NEU: Box MCP-Server für Content Management**
+
+Box-spezifische Skills ermöglichen Claude-Integration mit Box für Enterprise Content Management.
+
+**Features:**
+- 📁 **Box File Access**: Zugriff auf Box-gespeicherte Dokumente
+- 🔍 **Content Search**: Durchsuchen von Box-Content
+- 📝 **Document Processing**: Dokumente aus Box analysieren und bearbeiten
+- 🔄 **Workflow Integration**: Box in Skills-Workflows integrieren
+
+**Setup:**
+Siehe [MCP_GUIDE.md](MCP_GUIDE.md) für Box MCP-Server Konfiguration.
+
+**Use Cases mit Skills:**
+- "Legal Review Skill" + Box MCP für Contract Repository
+- "Compliance Skill" + Box für Policy Documents
+- "Brand Guidelines Skill" + Box für Marketing Assets
+
+---
 
 ### F) WEITERE FEATURES & UPDATES (OKTOBER 2025)
 

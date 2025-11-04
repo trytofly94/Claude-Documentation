@@ -140,11 +140,29 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 💻 **61.4%** auf OSWorld Computer Use (+19 Prozentpunkte)
 ⚡ Pricing unverändert: $3/$15 per million tokens
 
-### API & Skills Updates
+### Skills & API Updates (Oktober 16, 2025)
 
-📦 **Skills API** (`/v1/skills`) - Programmatische Skill-Verwaltung mit Versionierung (→ [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md#skills-api))
+🎯 **Agent Skills Launch** - Spezialisierte Fähigkeiten für Claude
+- **Was**: Ordner mit Anweisungen, Scripts & Ressourcen die Claude automatisch lädt
+- **Wo**: Claude Apps, Claude Code (`~/.claude/skills/`), API
+- **Composable**: Mehrere Skills arbeiten zusammen
+- **Portable**: Gleiche Skills funktionieren überall
+- **Progressive Disclosure**: Nur relevante Informationen werden geladen
+- **Skill-Creator Skill**: Interaktive Skill-Erstellung durch Konversation
+
+📦 **Skills API** (`/v1/skills`) - Programmatische Skill-Verwaltung
+- Versionierung & Rollbacks
+- Team-Distribution automatisiert
+- A/B Testing möglich
+- Beta: `anthropic-beta: skills-2025-10-02`
 
 🧠 **Developer Platform** - Context Editing & Memory Tool für längere Tasks (→ [CLAUDE_CODE.md](CLAUDE_CODE.md#api-features))
+
+**Ressourcen:**
+- [Skills Blog Post](https://claude.com/blog/skills)
+- [CLAUDE_DESKTOP.md - Skills-Sektion](CLAUDE_DESKTOP.md#d-skills---spezialisierte-fähigkeiten-für-claude)
+- [WORKFLOWS.md - Skills-Workflows](WORKFLOWS.md#d-skills-basierte-workflows)
+- [MCP_GUIDE.md - Skills vs. MCP](MCP_GUIDE.md#b1-skills-vs-mcp---wann-was-nutzen)
 
 ### Security & Tools
 
@@ -225,6 +243,23 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 - ⭐ Claude Code für Entwicklung
 - ⭐ Claude Desktop für Dokumentation & Planning
 - ⭐ MCP-Server in beiden Tools sharen
+
+### 🆕 Nutze Skills wenn:
+- ✅ Team-Workflows standardisieren (Commit Messages, Code Reviews, Testing)
+- ✅ Brand Guidelines durchsetzen (Logo-Nutzung, Tone of Voice, Farbpaletten)
+- ✅ Wiederholbare Prozesse haben (QBRs, Status Reports, Sprint Planning)
+- ✅ Domain-Expertise kodifizieren (Legal Reviews, SEO, Compliance)
+- ✅ Code-basierte Transformationen (Data Processing, Document Generation)
+- ✅ Skills mit MCP kombinieren für End-to-End Automation
+
+**Skills-Beispiele:**
+- 📊 **QBR Automation**: Template + KPIs + Brand Guidelines → PPTX
+- 👨‍⚖️ **Legal Contract Review**: Standard-Klauseln + Risiko-Patterns → Compliance-Check
+- 🔄 **Sprint Planning**: Team Velocity + Capacity + Story Points → Planning Docs
+- 🎨 **Brand Compliance**: Logo-Rules + Colors + Fonts → Auto-Formatting
+- 💻 **Coding Standards**: ESLint + Naming + Documentation → Consistent Code
+
+→ Siehe [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md#d-skills---spezialisierte-fähigkeiten-für-claude) für Details
 
 ---
 
