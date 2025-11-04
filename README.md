@@ -1,7 +1,7 @@
 # 📚 CLAUDE ECOSYSTEM DOKUMENTATION
 
 **Stand:** 4. November 2025
-**Version:** 3.3 - Feature-Erweiterung mit Web Version & Breaking Changes
+**Version:** 3.4 - Tool Selection Guide
 
 ---
 
@@ -95,7 +95,7 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 ---
 
 ### 5. 🔄 [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md)
-**Tool-Interaktionen & Synergismen** (NEU!)
+**Tool-Interaktionen & Synergismen**
 
 - ✅ Slash Commands, Skills, Subagenten, Hooks Integration
 - ✅ Wie Tools miteinander interagieren
@@ -114,6 +114,35 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 - ⚡ Hooks garantieren Automatisierung (nicht LLM-abhängig)
 - 🔒 PreToolUse Hooks können Tools blockieren (Security!)
 - 🎯 Subagenten mit Tool-Isolation für Separation of Concerns
+
+---
+
+### 6. 🎯 [TOOL_SELECTION_GUIDE.md](TOOL_SELECTION_GUIDE.md)
+**Wann welches Tool nutzen?** (NEU!)
+
+- ✅ **Entscheidungsbaum** für Tool-Auswahl
+- ✅ **Feature-Vergleich** (Skills vs. Commands vs. Subagents vs. MCP vs. Hooks)
+- ✅ **"Prompt First" Workflow** - Von einfach zu komplex skalieren
+- ✅ **Migrationspfade** (Prompt → Command → Skill/Subagent → +MCP)
+- ✅ **Use Case Matrix** mit 15+ Praxisbeispielen
+- ✅ **Kompositionshierarchie** - Welches Tool kann was aufrufen
+- ✅ **Anti-Patterns** - Wann NICHT welches Tool nutzen
+- ✅ **FAQ** mit 15+ häufigen Fragen
+- ✅ **Progressive Disclosure erklärt** (Skills vs. MCP Context-Impact)
+
+**Basis:** [Video-Tutorial](https://www.youtube.com/watch?v=kFpLzCVLA20) von Anthropic
+
+**Wichtigste Erkenntnisse:**
+- 🎯 **Faustregel:** "Prompt First" - Starte immer mit Slash Command
+- 📊 **Skills:** Progressive Disclosure = context-effizient (✅)
+- 🔴 **MCP:** Context-Window-Explosion bei zu vielen Servern (⚠️)
+- ⚡ **Subagenten:** Parallelisierung (Keyword: "parallel")
+- 🔧 **Hooks:** Garantierte Automatisierung (nicht LLM-abhängig)
+- 🌳 **Hierarchie:** Skills/Commands (top) > MCP/Subagents (middle) > Hooks (bottom)
+
+**Abgrenzung:**
+- **TOOL_INTERACTIONS.md:** **WIE** Tools zusammenarbeiten (technisch)
+- **TOOL_SELECTION_GUIDE.md:** **WANN** welches Tool wählen (strategisch)
 
 ---
 
@@ -238,7 +267,8 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 2. **VS Code Extension:** [CLAUDE_CODE.md#vs-code-extension](CLAUDE_CODE.md)
 3. **Checkpoints nutzen:** ESC ESC zum Rewind
 4. **MCP integrieren:** [MCP_GUIDE.md](MCP_GUIDE.md)
-5. **🆕 Tool-Interaktionen:** [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md) → Synergismen verstehen
+5. **🆕 Tool-Auswahl:** [TOOL_SELECTION_GUIDE.md](TOOL_SELECTION_GUIDE.md) → Entscheidungsbaum
+6. **Tool-Interaktionen:** [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md) → Synergismen verstehen
 
 ### Für Claude Desktop Nutzer
 
@@ -253,7 +283,8 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 2. **Basis:** [CLAUDE_CODE.md](CLAUDE_CODE.md) oder [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md)
 3. **Erweitern:** [MCP_GUIDE.md](MCP_GUIDE.md) für externe Integrationen
 4. **Optimieren:** [WORKFLOWS.md](WORKFLOWS.md) für Best Practices
-5. **🆕 Vertiefen:** [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md) für Tool-Synergismen
+5. **🆕 Tool-Auswahl:** [TOOL_SELECTION_GUIDE.md](TOOL_SELECTION_GUIDE.md) → Wann welches Tool
+6. **Vertiefen:** [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md) → Wie Tools zusammenarbeiten
 
 ---
 
@@ -333,6 +364,28 @@ Die Dokumentation ist in handliche Einzeldateien aufgeteilt:
 
 ## 🔄 Changelog
 
+### Version 3.4 (4. November 2025) - Tool Selection Guide
+
+**Neue Dokumentation:**
+- 🎯 **TOOL_SELECTION_GUIDE.md** - Meta-Dokumentation für strategische Tool-Auswahl
+  - **Entscheidungsbaum** mit Mermaid-Visualisierung
+  - **Feature-Vergleich** aller Tools (Skills, Commands, Subagents, MCP, Hooks)
+  - **"Prompt First" Workflow** - Skalierung von einfach zu komplex
+  - **Migrationspfade** (Prompt → Command → Skill/Subagent → +MCP)
+  - **Use Case Matrix** mit 15+ detaillierten Praxisbeispielen
+  - **Kompositionshierarchie** - Welches Tool kann welche Tools aufrufen
+  - **Anti-Patterns** - 10 häufige Fehler dokumentiert
+  - **FAQ** mit 15+ häufigen Fragen zur Tool-Auswahl
+  - **Progressive Disclosure** vs. Context-Window-Explosion erklärt
+
+**Basis:**
+- Video-Tutorial: [How to choose the right approach](https://www.youtube.com/watch?v=kFpLzCVLA20)
+- Ergänzt TOOL_INTERACTIONS.md (WIE) mit Meta-Ebene (WANN)
+
+**Quelle:** GitHub Issue #7
+
+---
+
 ### Version 3.3 (4. November 2025) - Feature-Erweiterung
 
 **Neue Hauptsektionen in CLAUDE_CODE.md:**
@@ -385,4 +438,4 @@ Bei Fragen:
 
 **🎉 Claude Ecosystem Dokumentation - Ready to Use!**
 
-Start: [CLAUDE_CODE.md](CLAUDE_CODE.md) | [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md) | [MCP_GUIDE.md](MCP_GUIDE.md) | [WORKFLOWS.md](WORKFLOWS.md) | 🆕 [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md)
+Start: [CLAUDE_CODE.md](CLAUDE_CODE.md) | [CLAUDE_DESKTOP.md](CLAUDE_DESKTOP.md) | [MCP_GUIDE.md](MCP_GUIDE.md) | [WORKFLOWS.md](WORKFLOWS.md) | [TOOL_INTERACTIONS.md](TOOL_INTERACTIONS.md) | 🆕 [TOOL_SELECTION_GUIDE.md](TOOL_SELECTION_GUIDE.md)
