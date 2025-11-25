@@ -30,6 +30,7 @@ cd /pfad/zu/deinem/projekt
 ```
 
 👉 **Mehr Details:** [INSTALLATION.md](INSTALLATION.md)
+💻 **Noch nie Terminal benutzt?** [TERMINAL_GUIDE.md](TERMINAL_GUIDE.md) - Terminal für Anfänger (Windows & Mac)
 
 ### Schritt 2: Basis-Templates kopieren
 ```bash
@@ -165,6 +166,13 @@ Dort findest du:
 
 ## 💡 Häufige Fragen
 
+### "Ich habe noch nie Terminal/CMD benutzt - ist das schwer?"
+**Nein!** Unser Guide erklärt alles Schritt für Schritt: [TERMINAL_GUIDE.md](TERMINAL_GUIDE.md)
+- Terminal öffnen (Windows & Mac)
+- Zum Projekt navigieren (`cd`)
+- Claude starten
+- Nur 5 Minuten Lesezeit!
+
 ### "Muss ich Git können?"
 **Basis-Level reicht:** `git add`, `git commit`, `git push`
 Claude hilft dir dabei! In [BASIS_WORKFLOW.md](BASIS_WORKFLOW.md) steht alles.
@@ -177,7 +185,8 @@ Wenn Claude trotzdem zu proaktiv ist: "Bitte nur das machen was ich sage!"
 **Ja!** Das ist genau der Punkt. Fang einfach an, lerne die Basis, upgrade später.
 
 ### "Was wenn ich noch Fragen habe?"
-- 📖 [BASIS_WORKFLOW.md](BASIS_WORKFLOW.md) durchlesen
+- 💻 [TERMINAL_GUIDE.md](TERMINAL_GUIDE.md) - Terminal Basics
+- 📖 [BASIS_WORKFLOW.md](BASIS_WORKFLOW.md) - Workflow lernen
 - 💬 Claude einfach fragen: "Wie funktioniert X?"
 - 🆘 Bei Problemen: [INSTALLATION.md](INSTALLATION.md) Troubleshooting
 

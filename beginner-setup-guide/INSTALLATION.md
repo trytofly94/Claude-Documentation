@@ -3,6 +3,8 @@
 **Dauer:** 10-15 Minuten
 **Voraussetzungen:** Node.js installiert
 
+💻 **Noch nie mit Terminal gearbeitet?** Lies zuerst: [TERMINAL_GUIDE.md](TERMINAL_GUIDE.md) (5 Min)
+
 ---
 
 ## ✅ Voraussetzungen prüfen
@@ -155,10 +157,26 @@ Ein custom WordPress Theme für...  ← Deine Beschreibung
 
 ### Claude starten
 
+**Option 1: Mit Permissions (Standard)**
 ```bash
 # Im Projekt-Ordner
 claude
 ```
+Claude fragt bei jeder Aktion um Erlaubnis.
+**Gut für:** Lernen, volle Kontrolle
+
+**Option 2: Ohne Permission-Prompts (Anfänger empfohlen!)**
+```bash
+# Im Projekt-Ordner
+claude --dangerously-skip-permissions
+```
+Claude arbeitet ohne nachzufragen.
+**Gut für:** Flüssiges Arbeiten, weniger Unterbrechungen
+⚠️ Nur in DEINEN eigenen Projekten nutzen!
+
+💡 **Tipp für Anfänger:** Start mit `--dangerously-skip-permissions` - der Name klingt dramatischer als es ist!
+
+👉 **Mehr Details:** [TERMINAL_GUIDE.md](TERMINAL_GUIDE.md#-claude-code-starten)
 
 ### Test: Claude testen
 
