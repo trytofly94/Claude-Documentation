@@ -1,175 +1,213 @@
-# 🚀 Claude Code für Anfänger: Komplettes Setup-System
+# 🚀 Claude Code für Anfänger - Basis Setup
 
-**Stand:** 21. November 2025
-**Zielgruppe:** Entwickler mit Python, PHP, HTML, WordPress (wenig Programmiererfahrung)
-**Fokus:** Einfach, praxisorientiert, Best Practices
-
----
-
-## 📋 Was ist das?
-
-Dieses Setup-System hilft dir, Claude Code professionell zu nutzen - auch wenn du noch wenig Erfahrung mit Coding-Tools hast. Es basiert auf **aktuellen Best Practices** von Anthropic, der Community und bewährten Software-Entwicklungsmethoden.
-
-## 🎯 Was du lernen wirst
-
-✅ **Claude Code richtig einrichten** - Installation, Konfiguration, Permissions
-✅ **Effektive Workflows nutzen** - Planen → Coden → Testen → Committen
-✅ **Git/GitHub professionell verwenden** - Branching, Commits, Pull Requests
-✅ **Best Practices anwenden** - Auch als Anfänger wie ein Profi arbeiten
-✅ **Typische Aufgaben automatisieren** - Slash Commands, Hooks, Checklists
-
-## 📚 Dokumentations-Übersicht
-
-### 1. **[SETUP_ANLEITUNG.md](./SETUP_ANLEITUNG.md)** ⭐ START HIER
-Schritt-für-Schritt Installation und Erstkonfiguration:
-- Claude Code installieren
-- GitHub CLI einrichten
-- `.claude/` Ordner konfigurieren
-- Permissions richtig setzen
-- Erste Schritte
-
-### 2. **[WORKFLOW_GUIDE.md](./WORKFLOW_GUIDE.md)** 🔄 TÄGLICHE ARBEIT
-Best Practices für den Alltag:
-- Der "Explore → Plan → Code → Commit" Workflow
-- Test-Driven Development (TDD)
-- Visual Iteration mit Screenshots
-- Checklists für komplexe Tasks
-- Context Management (`/clear`, etc.)
-
-### 3. **[GIT_WORKFLOW.md](./GIT_WORKFLOW.md)** 🌿 VERSIONSKONTROLLE
-Git für Anfänger - aber professionell:
-- Feature Branch Workflow
-- Commit Best Practices
-- Pull Requests erstellen
-- Konfliktlösung
-- GitHub Integration
-
-### 4. **[CLAUDE_MD_TEMPLATE.md](./CLAUDE_MD_TEMPLATE.md)** 📝 PROJEKT-KONTEXT
-Vorlagen für deine `CLAUDE.md` Dateien:
-- Python-Projekte
-- PHP/WordPress-Projekte
-- HTML/CSS/JavaScript
-- Testing-Konfiguration
-
-### 5. **[slash-commands/](./slash-commands/)** ⚡ AUTOMATISIERUNG
-Fertige Slash Commands für typische Aufgaben:
-- `/plan-feature` - Feature planen
-- `/test-code` - Tests schreiben
-- `/review-code` - Code Review
-- `/wordpress-debug` - WordPress Debugging
-- `/commit-changes` - Git Commit erstellen
-
-### 6. **[hooks/](./hooks/)** 🪝 EVENT-AUTOMATION
-Event-basierte Automatisierung:
-- Pre-commit: Tests vor Commit
-- Post-write: Code-Formatierung
-- User-prompt-submit: Kontextprüfung
+**Stand:** 25. November 2025
+**Zielgruppe:** Entwickler die einfach starten wollen - ohne Überforderung
+**Philosophie:** Fokussiert bleiben, Schritt für Schritt lernen
 
 ---
 
-## 🎓 Wie fange ich an?
+## 🎯 Was ist das hier?
 
-### **Schnellstart (20 Minuten)**
+Ein **minimales, fokussiertes Setup** für Claude Code. Keine Überforderung, keine 100 Features auf einmal. Nur das Wesentliche:
 
+✅ Claude Code richtig installieren
+✅ Mit einem einfachen Workflow arbeiten
+✅ Projekte sauber dokumentieren
+✅ Git für Backups nutzen
+✅ **Später:** Advanced Features freischalten wenn bereit
+
+---
+
+## 🏁 Schnellstart (15 Minuten)
+
+### Schritt 1: Installation
 ```bash
-# 1. Claude Code installieren (falls noch nicht geschehen)
+# Claude Code installieren
 npm install -g @anthropic-ai/claude-code
 
-# 2. In dein Projekt wechseln
+# In dein Projekt wechseln
 cd /pfad/zu/deinem/projekt
-
-# 3. Diese Anleitungen herunterladen
-git clone https://github.com/trytofly94/Claude-Documentation.git
-cd Claude-Documentation/beginner-setup-guide
-
-# 4. Setup-Anleitung folgen
-# Öffne SETUP_ANLEITUNG.md und folge Schritt für Schritt
 ```
 
-### **Empfohlene Reihenfolge**
+👉 **Mehr Details:** [INSTALLATION.md](INSTALLATION.md)
 
-1. ✅ **SETUP_ANLEITUNG.md** durcharbeiten (30-45 Min)
-2. ✅ **CLAUDE.md für dein Projekt** erstellen (15 Min)
-3. ✅ **GIT_WORKFLOW.md** durchlesen (20 Min)
-4. ✅ **WORKFLOW_GUIDE.md** studieren (30 Min)
-5. ✅ **Slash Commands** installieren (10 Min)
-6. ✅ **Erstes kleines Projekt** mit Claude starten! 🎉
+### Schritt 2: Basis-Templates kopieren
+```bash
+# Projekt-Templates kopieren
+cp beginner-setup-guide/templates/README.md ./README.md
+cp beginner-setup-guide/templates/session-notes.md ./session-notes.md
+cp beginner-setup-guide/templates/CLAUDE.md ./CLAUDE.md
 
----
+# System-Verhalten einrichten
+mkdir -p ~/.claude
+cp beginner-setup-guide/system/CLAUDE.md ~/.claude/CLAUDE.md
+```
 
-## 💡 Philosophie dieses Systems
+### Schritt 3: Templates anpassen
+```bash
+# README.md öffnen und Projekt-Info eintragen
+# CLAUDE.md öffnen und Tech Stack anpassen
+```
 
-### **🎯 Für Anfänger, aber nicht simplifiziert**
-Du lernst von Anfang an die **richtigen** Methoden - nicht "Anfänger-Krücken", die du später wieder verlernen musst.
+### Schritt 4: Claude starten
+```bash
+claude
+```
 
-### **📖 Lernen durch Tun**
-Jede Anleitung enthält konkrete Beispiele, die du direkt ausprobieren kannst.
-
-### **🔄 Iterativ verbessern**
-Du musst nicht alles auf einmal perfekt machen. Fang einfach an und verbessere dein Setup kontinuierlich.
-
-### **🤝 Community Best Practices**
-Basiert auf bewährten Methoden von Anthropic, GitHub, und der Claude Code Community.
-
----
-
-## 🛠️ Technologie-Stack
-
-Dieses Setup ist optimiert für:
-
-- **Python** (Flask, Django, FastAPI, Scripts)
-- **PHP** (WordPress, Laravel, Custom)
-- **HTML/CSS/JavaScript** (Frontend, WordPress Themes)
-- **Git/GitHub** (Versionskontrolle, Collaboration)
-- **VS Code** (empfohlener Editor mit Claude Extension)
+**Das war's! Du kannst loslegen.** 🎉
 
 ---
 
-## 📊 Was du nach diesem Setup kannst
+## 📚 Die 4 Basis-Phasen
 
-✅ **Professionell mit Claude Code arbeiten**
-✅ **Sauberen, getesteten Code schreiben**
-✅ **Git/GitHub wie ein Profi nutzen**
-✅ **Komplexe Projekte strukturiert angehen**
-✅ **Best Practices automatisch anwenden**
-✅ **Effizienter arbeiten** (10-30% Produktivitätssteigerung)
+Claude arbeitet am besten mit diesem einfachen Workflow:
+
+### **1. Explore (Verstehen)** 🔍
+```
+"Lies bitte die Datei script.py und erkläre mir was sie macht.
+Schreibe noch keinen Code."
+```
+
+### **2. Plan (Planen)** 📋
+```
+"Erstelle einen Plan wie wir Feature X hinzufügen können.
+Noch nichts implementieren!"
+```
+
+### **3. Code (Umsetzen)** ⚙️
+```
+"Implementiere jetzt den Plan Schritt für Schritt."
+```
+
+### **4. Commit (Sichern)** 💾
+```
+"Erstelle ein Git Backup mit einer guten Beschreibung."
+```
+
+👉 **Mehr Details:** [BASIS_WORKFLOW.md](BASIS_WORKFLOW.md)
 
 ---
 
-## 🆘 Hilfe & Support
+## 📁 Projekt-Struktur (Basis)
 
-### **Bei Problemen:**
+Nach dem Setup hat dein Projekt:
 
-1. **Dokumentation nochmal lesen** - oft steht die Lösung schon drin
-2. **Claude Code Docs** - https://code.claude.com/docs
-3. **GitHub Issues** - https://github.com/anthropics/claude-code/issues
-4. **Community** - Reddit r/ClaudeAI, GitHub Discussions
+```
+mein-projekt/
+├── README.md              # Projekt-Beschreibung + TODO-Liste
+├── session-notes.md       # Was wurde gemacht? Entscheidungen? Probleme?
+├── CLAUDE.md              # Minimal-Info für Claude (Tech Stack, etc.)
+├── .git/                  # Git für Backups (automatisch)
+└── dein-code/             # Dein eigentlicher Code
+```
 
-### **Häufige Anfängerfehler:**
+**Das reicht!** Keine 50 Config-Files, keine komplexen Hooks. Einfach arbeiten.
 
-❌ Zu große Tasks auf einmal angehen → ✅ Klein anfangen, iterieren
-❌ Context überladen → ✅ Regelmäßig `/clear` verwenden
-❌ Keine Tests schreiben → ✅ TDD von Anfang an
-❌ Direkt auf `main` committen → ✅ Feature Branches nutzen
-❌ Claude alles machen lassen → ✅ Code verstehen und reviewen
+---
+
+## 🎓 Wie arbeite ich mit diesem System?
+
+### Typische Session:
+
+```bash
+# 1. Claude starten
+claude
+
+# 2. Aufgabe beschreiben
+"Ich möchte in script.py die Funktion calculate() verbessern"
+
+# 3. Claude führt die 4 Phasen durch:
+#    - Explore: Liest script.py
+#    - Plan: Erstellt Plan
+#    - Code: Implementiert
+#    - Commit: Erstellt Git Backup
+
+# 4. Session-Notes werden aktualisiert
+# 5. Fertig!
+```
+
+### Claude's Verhalten (wichtig!)
+
+Claude wird **NUR** das tun was du sagst:
+- ✅ Konkrete Aufgabe erledigen
+- ✅ Kurze Doku in session-notes.md schreiben
+- ✅ Bei großen Änderungen: Git Backup
+- ✅ Verbesserungen **vorschlagen** ist OK
+- ❌ **NICHT** ungefragt Features implementieren
+- ❌ **NICHT** .env/.gitignore/Tests erstellen ohne Aufforderung
+- ❌ **NICHT** ganze Projekt-Strukturen scaffolden
+
+**Wenn du mehr willst, sagst du es explizit!**
+
+---
+
+## 🎯 Was ist mit Tests, Hooks, Automation?
+
+Die gibt es alle - aber **später**, wenn du bereit bist!
+
+### Advanced Features freischalten:
+
+Wenn du mit der Basis zufrieden bist und mehr willst:
+
+👉 **[advanced-features/README.md](../advanced-features/README.md)**
+
+Dort findest du:
+- ⚡ Slash Commands (Automatisierung)
+- 🪝 Hooks (Event-basiert)
+- 🧪 Test-Driven Development
+- 🔄 Erweiterte Workflows
+- 📦 Komplexe Templates
+
+**Aber erst wenn du soweit bist!** Kein Stress.
+
+---
+
+## 💡 Häufige Fragen
+
+### "Muss ich Git können?"
+**Basis-Level reicht:** `git add`, `git commit`, `git push`
+Claude hilft dir dabei! In [BASIS_WORKFLOW.md](BASIS_WORKFLOW.md) steht alles.
+
+### "Was wenn Claude zu viel macht?"
+Schau in `~/.claude/CLAUDE.md` - da stehen die Limits.
+Wenn Claude trotzdem zu proaktiv ist: "Bitte nur das machen was ich sage!"
+
+### "Kann ich die Advanced Features später nutzen?"
+**Ja!** Das ist genau der Punkt. Fang einfach an, lerne die Basis, upgrade später.
+
+### "Was wenn ich noch Fragen habe?"
+- 📖 [BASIS_WORKFLOW.md](BASIS_WORKFLOW.md) durchlesen
+- 💬 Claude einfach fragen: "Wie funktioniert X?"
+- 🆘 Bei Problemen: [INSTALLATION.md](INSTALLATION.md) Troubleshooting
 
 ---
 
 ## 🎯 Nächste Schritte
 
-1. **[SETUP_ANLEITUNG.md öffnen](./SETUP_ANLEITUNG.md)** und durcharbeiten
-2. **Erstes Projekt** mit Claude Code starten
-3. **Feedback geben** - was funktioniert gut? Was fehlt?
+1. ✅ [INSTALLATION.md](INSTALLATION.md) durcharbeiten (10 Min)
+2. ✅ Templates ins Projekt kopieren (2 Min)
+3. ✅ [BASIS_WORKFLOW.md](BASIS_WORKFLOW.md) lesen (10 Min)
+4. ✅ Erste Session mit Claude! 🚀
+5. ⏸️ **Später:** [Advanced Features](../advanced-features/README.md) anschauen
 
 ---
 
-## 📜 Lizenz & Credits
+## 📜 Philosophie dieses Systems
 
-- **Erstellt:** 21. November 2025
-- **Basierend auf:** Anthropic Best Practices, awesome-claude-code, Community Wisdom
-- **Repository:** https://github.com/trytofly94/Claude-Documentation
-- **Lizenz:** MIT (frei nutzbar)
+### **Fokussiert statt überwältigt**
+Nicht alle Features auf einmal. Schritt für Schritt.
+
+### **Explizit statt magisch**
+Claude macht nur was du sagst. Keine Überraschungen.
+
+### **Wachsen wenn bereit**
+Advanced Features sind da - aber nur wenn du sie willst.
+
+### **Praktisch statt theoretisch**
+Direkt loslegen. Learning by doing.
 
 ---
 
-**Viel Erfolg mit Claude Code! 🚀**
+**Viel Erfolg! 🚀**
+
+*PS: Wenn du die Basis gemeistert hast, schau dir [advanced-features/](../advanced-features/) an. Da wird's dann richtig cool!* 😎
