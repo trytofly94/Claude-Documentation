@@ -109,10 +109,17 @@ Claude: "✅ Schritt 1 erledigt: login.py erstellt"
 
 Claude: "✅ Schritt 2 erledigt: Login-Funktion implementiert"
 
-Claude: "✅ Schritt 3 erledigt: Route registriert"
+Claude: "✅ Schritt 3 erledigt: Tests erstellt und ausgeführt - Alle grün!"
+
+Claude: "✅ Schritt 4 erledigt: Route registriert"
 
 Claude: "Alle Schritte abgeschlossen! Soll ich committen?"
 ```
+
+**💡 Hinweis:** Tests werden automatisch mit dem Code erstellt.
+- Neue Funktion = Basic Unit Tests
+- Bug Fix = Regression Test
+- Einfach und fokussiert (kein Overkill!)
 
 **Warum wichtig?**
 - Transparenz - du siehst was passiert
@@ -191,7 +198,9 @@ Claude: "Plan:
 1. Input-Validierung hinzufügen (prüfe ob Number)
 2. Fehlerbehandlung (ValueError wenn kein Number)
 3. Docstring hinzufügen
-4. Git Commit
+4. Unit Tests schreiben
+5. Tests ausführen
+6. Git Commit
 
 OK?"
 
@@ -205,6 +214,8 @@ User: "Implementiere den Plan"
 Claude: "✅ Input-Validierung hinzugefügt"
 Claude: "✅ ValueError bei ungültigem Input"
 Claude: "✅ Docstring geschrieben"
+Claude: "✅ Unit Tests erstellt (tests/test_calculate.py)"
+Claude: "✅ Tests ausgeführt - Alle 5 Tests grün!"
 Claude: "Fertig! Soll ich committen?"
 ```
 

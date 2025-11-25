@@ -54,6 +54,7 @@ projekt/
 ├── README.md           # Diese Datei
 ├── session-notes.md    # Entwicklungs-Notizen
 ├── CLAUDE.md           # Info für Claude Code
+├── tests/              # Unit Tests
 └── [deine Files]       # Dein Code
 ```
 

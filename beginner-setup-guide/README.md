@@ -97,6 +97,7 @@ mein-projekt/
 ├── README.md              # Projekt-Beschreibung + TODO-Liste
 ├── session-notes.md       # Was wurde gemacht? Entscheidungen? Probleme?
 ├── CLAUDE.md              # Minimal-Info für Claude (Tech Stack, etc.)
+├── tests/                 # Unit Tests (automatisch mit Code erstellt)
 ├── .git/                  # Git für Backups (automatisch)
 └── dein-code/             # Dein eigentlicher Code
 ```

@@ -37,7 +37,10 @@ projekt/
 ├── main.py          # Entry Point
 ├── scraper.py       # Scraping Logic
 ├── database.py      # DB Operations
-└── utils.py         # Helper Functions
+├── utils.py         # Helper Functions
+└── tests/           # Unit Tests
+    ├── test_scraper.py
+    └── test_database.py
 ```
 
 **Was macht was?**
@@ -45,6 +48,7 @@ projekt/
 - `scraper.py`: Enthält alle Scraping-Funktionen
 - `database.py`: Datenbank CRUD Operations
 - `utils.py`: Kleine Helper (String Parsing, etc.)
+- `tests/`: Unit Tests für alle Funktionen
 
 ---
 

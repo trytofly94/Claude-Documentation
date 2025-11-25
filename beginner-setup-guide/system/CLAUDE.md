@@ -176,20 +176,40 @@ Claude: "Soll ich:
 Wenn Option 2: Welche Ordner-Struktur bevorzugst du?"
 ```
 
-### 4. KEINE Tests ohne Aufforderung
+### 4. Tests sind Teil des Workflows
+
+**Tests gehören zum professionellen Entwickeln!**
 
 ```
-❌ FALSCH:
+✅ RICHTIG - Tests integrieren:
 User: "Füge Funktion add() hinzu"
-Claude: Erstellt add() + test_add() + fixtures + test_config
+Claude:
+1. Erstellt add() Funktion
+2. Erstellt tests/test_add.py mit Unit Tests
+3. Führt Tests aus
+4. Zeigt Ergebnis
 
-✅ RICHTIG:
-User: "Füge Funktion add() hinzu"
-Claude: Erstellt NUR add()
-
-Claude: "Funktion add() wurde hinzugefügt.
-Soll ich auch Tests dafür schreiben?"
+Claude: "✅ Funktion add() und Tests erstellt. Alle Tests grün!"
 ```
+
+**Aber:** Nur sinnvolle Tests, kein Overkill!
+
+```
+✅ Test-Ordner erstellen ist OK:
+- tests/ Ordner bei Projekt-Start
+- Test-Files parallel zu Code-Files
+- Einfache Unit Tests
+
+❌ KEIN Overkill:
+- Nicht 10 Test-Files für 1 Funktion
+- Keine komplexen Fixtures ohne Grund
+- Keine Test-Config ohne Bedarf
+```
+
+**Faustregel:**
+- Neue Funktion = Basic Unit Test (Happy Path + 1-2 Edge Cases)
+- Bug Fix = Regression Test
+- User kann sagen "ohne Tests" wenn er das will
 
 ### 5. KEINE Dependencies installieren ohne Nachfrage
 
@@ -338,38 +358,41 @@ Division durch 0 verursachte Crash
    ↓
 2. Claude: Explore (Verstehen)
    ↓
-3. Claude: Plan erstellen + zeigen
+3. Claude: Plan erstellen + zeigen (inkl. Tests)
    ↓
 4. User: Plan OK?
    ↓
-5. Claude: Code implementieren (Plan befolgen)
+5. Claude: Code + Tests implementieren (Plan befolgen)
    ↓
-6. Claude: Git Commit (wenn große Änderung)
+6. Claude: Tests ausführen + Ergebnis zeigen
    ↓
-7. Claude: session-notes.md aktualisieren
+7. Claude: Git Commit (wenn große Änderung)
    ↓
-8. Claude: Vorschläge machen (NICHT implementieren)
+8. Claude: session-notes.md aktualisieren
    ↓
-9. User: Weitere Aufgabe oder Ende
+9. Claude: Vorschläge machen (NICHT implementieren)
+   ↓
+10. User: Weitere Aufgabe oder Ende
 ```
 
 ---
 
 ## 💡 Beispiel-Sessions
 
-### Gute Session (Explizit)
+### Gute Session (Explizit + Tests)
 ```
 User: "Füge zur calculate() Funktion Division hinzu"
 
 Claude:
 1. Liest calculate() [Explore]
-2. Plan: "Ich werde Division als neue Operation hinzufügen mit Check für Division durch 0"
-3. Implementiert Division [Code]
-4. Git Commit: "feat: Add division to calculate function" [Commit]
-5. Updatet session-notes.md
-6. "✅ Division hinzugefügt. Möchtest du auch Tests dafür?"
+2. Plan: "Ich werde Division als neue Operation hinzufügen mit Check für Division durch 0 + Tests"
+3. Implementiert Division + Basic Unit Tests [Code]
+4. Führt Tests aus: "✅ 3 Tests grün!"
+5. Git Commit: "feat: Add division to calculate function with tests" [Commit]
+6. Updatet session-notes.md
+7. "✅ Division hinzugefügt und getestet!"
 
-→ User entscheidet über Tests
+→ Fokussiert, mit Tests, fertig!
 ```
 
 ### Schlechte Session (Zu proaktiv)
@@ -379,9 +402,9 @@ User: "Füge zur calculate() Funktion Division hinzu"
 Claude:
 - Fügt Division hinzu
 - Fügt auch Modulo, Power, Square Root hinzu [❌ ungebeten]
-- Erstellt vollständige Test Suite [❌ ungebeten]
+- Erstellt 50+ Tests mit komplexen Fixtures [❌ Overkill]
 - Refactored zu OOP mit Factory Pattern [❌ ungebeten]
-- Erstellt pytest.ini, .gitignore, requirements.txt [❌ ungebeten]
+- Erstellt pytest.ini, .gitignore, requirements.txt, tox.ini [❌ ungebeten]
 
 → User ist überwältigt
 ```
