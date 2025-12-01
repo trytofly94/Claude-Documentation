@@ -1,7 +1,7 @@
 # CLAUDE DESKTOP - Vollständige Dokumentation
 
-**Stand:** 22. Oktober 2025
-**Version:** 3.0
+**Stand:** 1. Dezember 2025
+**Version:** 3.1
 
 Teil der [Claude Ecosystem Dokumentation](README.md)
 
@@ -38,9 +38,30 @@ Claude Desktop ist eine eigenständige Desktop-Anwendung (verfügbar für Window
 - MCP Server Indicator (Hammer-Icon ⚙️ unten rechts im Input-Bereich)
 
 
-**Verfügbare Modelle (Oktober 2025):**
+**Verfügbare Modelle (November 2025):**
 
-### Claude Sonnet 4.5 (Default)
+### 🆕 Claude Opus 4.5 (24. November 2025)
+
+**Neues Flaggschiff-Modell für komplexeste Aufgaben:**
+- **Model ID:** `claude-opus-4-5-20251101`
+- **Pricing:** $5 Input / $25 Output per million tokens
+- **Verfügbarkeit:** Max, Team, Enterprise (API: alle Tiers)
+
+**Performance-Highlights:**
+- 🏆 **Verbessertes Coding** - State-of-the-Art Code-Generierung
+- 🧠 **Enhanced Reasoning** - Tieferes analytisches Denken
+- 👁️ **Bessere Vision** - Verbesserte Bild- und Dokumentenanalyse
+- 📊 **Mathematik** - Signifikant bessere mathematische Fähigkeiten
+- 🤖 **Agent Capabilities** - Optimiert für autonome, langläufige Tasks
+
+**Wann Opus 4.5 nutzen:**
+- Komplexeste Reasoning-Aufgaben
+- Langläufige autonome Agents
+- Höchste Code-Qualität erforderlich
+- Multi-Step Research & Analysis
+- Kritische Business-Entscheidungen
+
+### Claude Sonnet 4.5
 - **Empfohlen** für höchste Intelligenz, Agents & Coding
 - **77.2%** SWE-bench Verified (bestes Coding-Model)
 - **Pricing:** $3 Input / $15 Output per million tokens
@@ -75,15 +96,15 @@ Claude Desktop ist eine eigenständige Desktop-Anwendung (verfügbar für Window
 
 **Model-Vergleich:**
 
-| Feature | Haiku 4.5 | Sonnet 4.5 | Opus 4.1 |
+| Feature | Haiku 4.5 | Sonnet 4.5 | Opus 4.5 |
 |---------|-----------|------------|----------|
-| **SWE-bench Verified** | 73.3% | 77.2% | TBD |
+| **SWE-bench Verified** | 73.3% | 77.2% | Best-in-class |
 | **Speed** | 🏆 Schnellstes | Mittel | Langsam |
-| **Pricing (Input/Output)** | $1/$5 | $3/$15 | TBD |
-| **Context** | 200K (1M API) | 200K | TBD |
-| **Max Output** | 64K | 8K | TBD |
+| **Pricing (Input/Output)** | $1/$5 | $3/$15 | $5/$25 |
+| **Context** | 200K (1M API) | 200K | 200K |
+| **Max Output** | 64K | 8K | 8K |
 | **Extended Thinking** | ✅ | ✅ | ✅ |
-| **Computer Use** | ✅ 50.7% | ✅ | TBD |
+| **Computer Use** | ✅ 50.7% | ✅ | ✅ |
 | **Free Tier** | ✅ | ❌ | ❌ |
 
 **Wann Haiku 4.5 nutzen:**
@@ -99,10 +120,6 @@ Claude Desktop ist eine eigenständige Desktop-Anwendung (verfügbar für Window
 - **Production-kritische** Operationen
 - Längere **autonome** Coding-Sessions
 
-### Claude Opus 4.1
-- **Komplexeste Herausforderungen**
-- Details folgen bei offiziellem Release
-
 ---
 
 **Aktuelle Features (2025):**
@@ -111,6 +128,10 @@ Claude Desktop ist eine eigenständige Desktop-Anwendung (verfügbar für Window
 - ✅ Google Docs Integration (Pro, Team, Enterprise)
 - ✅ Projects (siehe nächster Abschnitt)
 - ✅ Erweiterte PDF-Unterstützung mit visueller Analyse
+- 🆕 **Endless Conversations** - Keine Context-Limits mehr (November 2025)
+- 🆕 **Desktop Extensions** - One-Click MCP Installation (November 2025)
+- 🆕 **Claude for Excel** - Beta für Max/Team/Enterprise (November 2025)
+- 🆕 **Claude for Chrome** - Für alle Max Users (November 2025)
 
 ### B) PROJECTS (PROJEKTE)
 
@@ -162,6 +183,77 @@ Basierend auf den Claude Apps Features:
 - **CLAUDE.md (Claude Code)**: Dateisystem-basiert, projekt-lokal, für CLI-Sessions
 
 ### C) MCP-INTEGRATION IN DESKTOP
+
+#### 🆕 Desktop Extensions (.dxt) - November 2025
+
+**One-Click MCP Server Installation**
+
+Desktop Extensions revolutionieren die MCP-Server-Installation. Statt manueller JSON-Konfiguration können MCP-Server jetzt wie Browser-Extensions mit einem Klick installiert werden.
+
+**Vorher (Manuelle Installation):**
+```bash
+# Node.js installieren
+npm install -g @example/mcp-server
+# JSON-Config manuell bearbeiten
+# Claude Desktop neu starten
+# Hoffen dass es funktioniert...
+```
+
+**Jetzt (Desktop Extensions):**
+1. `.dxt` oder `.mcpb` Datei herunterladen
+2. Doppelklick → Claude Desktop öffnet sich
+3. "Install" klicken → Fertig!
+
+**Features:**
+- 📦 **Bundled Dependencies** - Alles in einer Datei
+- 🔄 **Automatische Updates** - Extensions updaten sich selbst
+- 🔐 **Sichere API-Key Speicherung** - Im OS Keychain verschlüsselt
+- 🖥️ **Built-in Node.js** - Kein Node.js mehr nötig!
+- 🎯 **Extension Directory** - Durchsuchbare Extension-Bibliothek
+
+**Installation aus Directory:**
+1. `Settings` > `Extensions` öffnen
+2. `Browse extensions` klicken
+3. Gewünschte Extension auswählen
+4. API Keys/Einstellungen konfigurieren
+5. Sofort verfügbar in Konversationen
+
+**Custom Extensions installieren:**
+1. `Settings` > `Extensions` > `Advanced settings`
+2. `Extension Developer` Sektion finden
+3. `Install Extension...` klicken
+4. `.dxt` oder `.mcpb` Datei auswählen
+
+**Extension-Struktur:**
+```
+my-extension.dxt (ZIP-Archiv)
+├── manifest.json          # Metadata & Config
+├── server/                # Implementierung
+│   └── index.js
+├── icon.png              # Optional
+└── README.md             # Optional
+```
+
+**Admin Controls (Team/Enterprise):**
+- ✅ Public Extensions aktivieren/deaktivieren
+- ✅ Custom Extensions für Team hochladen
+- ✅ Allowlists für genehmigte Extensions
+- ✅ Private Extension Directories (via MDM/Group Policy)
+
+**Entwickler-Ressourcen:**
+```bash
+# Extension erstellen
+npx @anthropic-ai/mcpb init
+
+# Extension packen
+npx @anthropic-ai/mcpb pack
+```
+
+---
+
+#### Manuelle MCP-Konfiguration (Legacy)
+
+Die manuelle Konfiguration funktioniert weiterhin für fortgeschrittene Anwendungsfälle.
 
 **Konfigurationsdatei-Pfad (macOS):**
 ```
@@ -885,7 +977,116 @@ Siehe [MCP_GUIDE.md](MCP_GUIDE.md) für Box MCP-Server Konfiguration.
 
 ---
 
-### F) WEITERE FEATURES & UPDATES (OKTOBER 2025)
+### F) 🆕 NOVEMBER 2025 UPDATES
+
+#### Endless Conversations (24. November 2025)
+
+**Keine Context-Limits mehr für lange Chats**
+
+Mit dem Opus 4.5 Release wurde ein lang erwartetes Feature eingeführt: Endless Conversations. Lange Chats erreichen keine Usage-Walls mehr.
+
+**Wie es funktioniert:**
+- Claude fasst automatisch früheren Kontext zusammen, wenn Conversations länger werden
+- Verbesserte Long-Context-Qualität durch Opus 4.5 Training
+- Intelligentes Memory-Management behält wichtige Details
+
+**Verfügbarkeit:**
+- ✅ Alle bezahlten Plans (Pro, Max, Team, Enterprise)
+- ✅ Claude Desktop & claude.ai
+
+**Technischer Hintergrund:**
+> "Knowing the right details to remember is really important in complement to just having a longer context window." - Dianne Na Penn, Anthropic Head of Product Management
+
+---
+
+#### Claude for Excel (Beta Expansion)
+
+**Excel-Automatisierung direkt in Claude**
+
+Die Claude for Excel Beta wurde auf mehr Nutzer erweitert.
+
+**Verfügbarkeit:**
+- ✅ Max Plan
+- ✅ Team Plan
+- ✅ Enterprise Plan
+
+**Features:**
+- 📊 Erweiterte Spreadsheet-Automatisierung
+- 📈 Financial Modeling Capabilities
+- 🔢 Verbesserte Formel-Genauigkeit
+- 📋 Daten-Analyse und -Transformation
+
+**Was Anthropic sagt:**
+> "Sets a new standard for Excel automation and financial modeling"
+
+---
+
+#### Claude for Chrome (Expanded Access)
+
+**Browser-Integration für alle Max Users**
+
+Claude for Chrome ist jetzt für alle Max Users verfügbar (vorher Waitlist-only).
+
+**Features:**
+- 🌐 Tasks über Browser-Tabs hinweg ausführen
+- 🖱️ Computer Use Capabilities im Browser
+- 📝 Automatisches Form-Filling
+- 🔍 Web-Recherche und Datenextraktion
+
+**Verfügbarkeit:**
+- ✅ Claude Max Plan (alle User)
+- ⚠️ Nicht für Pro/Team/Enterprise
+
+---
+
+#### Claude Code in Desktop App
+
+**Multiple Agent Sessions parallel**
+
+Claude Code ist jetzt in der Desktop App verfügbar mit der Möglichkeit, mehrere Sessions parallel zu starten.
+
+**Features:**
+- 🔄 **Parallele Sessions** - Mehrere lokale und remote Agent-Instanzen gleichzeitig
+- 🐛 **Multi-Tasking** - z.B. Bug-fixing, GitHub-Recherche und Docs-Updates parallel
+- 🖥️ **Native Integration** - Nahtlos in Claude Desktop eingebettet
+
+**Beispiel-Workflow:**
+```
+Session 1: Bug in Authentication fixen
+Session 2: GitHub Issues recherchieren
+Session 3: Dokumentation aktualisieren
+
+Alle drei laufen parallel!
+```
+
+---
+
+#### Advanced Tool Use (Developer Platform)
+
+**Drei neue Beta-Features für Entwickler (24. November 2025)**
+
+Anthropic hat das Tool-System signifikant erweitert:
+
+**1. Tool Search Tool**
+- Dynamische Tool-Discovery statt alle Tools upfront laden
+- **85% Token-Reduktion** bei gleichem Tool-Zugriff
+- Accuracy von 49% auf 74% verbessert (Opus 4)
+
+**2. Programmatic Tool Calling**
+- Tool-Orchestrierung via Python Code
+- **37% Effizienz-Steigerung** bei komplexen Tasks
+- Intermediate Results werden gefiltert
+
+**3. Tool Use Examples**
+- Konkrete Beispiele neben JSON Schema
+- Accuracy von 72% auf 90% verbessert
+- Besseres Verständnis von API-Konventionen
+
+**Mehr Details:** [Advanced Tool Use Announcement](https://www.anthropic.com/engineering/advanced-tool-use)
+
+---
+
+### G) WEITERE FEATURES & UPDATES (OKTOBER 2025)
 
 #### "Imagine with Claude" (Temporäres Research Preview - BEENDET)
 
@@ -951,22 +1152,9 @@ Für schnelles UI-Prototyping nutze:
 
 #### Claude for Chrome Extension
 
-**Computer Use Capabilities für Max Users**
+**ℹ️ Update November 2025:** Jetzt für alle Max Users verfügbar - siehe [November 2025 Updates](#f--november-2025-updates) für Details.
 
-Claude for Chrome ist die Browser-Extension mit Computer Use Capabilities, jetzt verfügbar für Max Users.
-
-**Features:**
-- 🌐 **Browser Navigation** - Autonome Web-Navigation
-- 📝 **Form Filling** - Automatisches Ausfüllen von Formularen
-- 📊 **Spreadsheet Operations** - Daten in Sheets eintragen
-- 🔄 **Multi-Step Workflows** - Komplexe Browser-Aufgaben
-
-**Demo-Capabilities:**
-- Navigieren auf Websites
-- Informationen extrahieren
-- Formulare intelligent ausfüllen
-- Daten zwischen Tabs/Apps bewegen
-- Multi-Step Workflows ausführen
+**Computer Use Capabilities im Browser**
 
 **Performance:**
 - **Powered by:** Claude Sonnet 4.5
@@ -975,8 +1163,7 @@ Claude for Chrome ist die Browser-Extension mit Computer Use Capabilities, jetzt
 
 **Verfügbarkeit:**
 - ✅ Claude Max Plan erforderlich
-- ✅ Automatic Rollout an Waitlist-User (abgeschlossen)
-- ✅ Jetzt allgemein für Max Users verfügbar
+- ✅ Jetzt allgemein für alle Max Users verfügbar
 
 ---
 
@@ -993,8 +1180,8 @@ Claude for Chrome ist die Browser-Extension mit Computer Use Capabilities, jetzt
 
 #### Verfügbare Modelle (Update)
 
+- 🆕 **Claude Opus 4.5** (November 2025) - Neues Flaggschiff für komplexeste Tasks
 - **Claude Sonnet 4.5** (Default) - 77.2% SWE-bench
-- **Claude Opus 4.1** (Komplexeste Tasks)
 - **Claude Haiku 4.5** (Schnellstes Model)
 
 ---
